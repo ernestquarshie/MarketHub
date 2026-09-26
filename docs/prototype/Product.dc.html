@@ -60,15 +60,15 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 <section style="display: grid; grid-template-columns: 540px minmax(0, 1fr) 340px; gap: 32px; align-items: start">
 
 <div style="display: flex; flex-direction: column; gap: 12px">
-<div style="position: relative; height: 540px; border-radius: 16px; background: {{ view.bg }}; color: {{ view.fg }}; display: flex; align-items: center; justify-content: center">
-<svg class="ic" width="220" height="220" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 0.9"><path d="M4 7h13a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z M22 11v2 M10 9l-2 3h4l-2 3"></path></svg>
+<div style="position: relative; height: 540px; border-radius: 16px; background: #EDEDED; overflow: hidden">
+<img src="{{ view.img }}" alt="{{ view.alt }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
 <span style="position: absolute; left: 16px; top: 16px; padding: 4px 10px; border-radius: 6px; background: #C2410C; color: #FFFFFF; font-size: 13px; font-weight: 700">Flash deal −17%</span>
-<span style="position: absolute; left: 16px; bottom: 16px; padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,.9); font-size: 12px; color: #334155">{{ view.label }} · {{ colorName }} · photo placeholder</span>
+<span style="position: absolute; left: 16px; bottom: 16px; padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,.9); font-size: 12px; color: #334155">{{ view.label }} · AI-generated sample photo</span>
 <span style="position: absolute; right: 16px; bottom: 16px; padding: 6px; border-radius: 8px; background: #FFFFFF; display: flex"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" aria-label="Zoom" role="img"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5M11 8v6M8 11h6"></path></svg></span>
 </div>
 <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px">
 <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="5">
-<button type="button" onClick="{{ t.pick }}" aria-label="{{ t.label }}" aria-pressed="{{ t.on }}" style="height: 92px; border-radius: 10px; border: 2px solid {{ t.border }}; background: {{ t.bg }}; color: {{ t.fg }}; display: flex; align-items: center; justify-content: center; padding: 0"><svg class="ic" width="38" height="38" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.3"><path d="{{ t.path }}"></path></svg></button>
+<button type="button" onClick="{{ t.pick }}" aria-label="{{ t.label }}" aria-pressed="{{ t.on }}" style="height: 96px; border-radius: 10px; border: 2px solid {{ t.border }}; background: #EDEDED; overflow: hidden; padding: 0"><img src="{{ t.img }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
 </sc-for>
 </div>
 </div>
@@ -176,7 +176,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 <h2 id="fbt-h" class="h" style="margin: 0; font-size: 20px; font-weight: 700">Frequently bought together</h2>
 <div style="display: flex; align-items: center; gap: 18px">
 <sc-for list="{{ fbt }}" as="f" hint-placeholder-count="3">
-<div style="display: flex; align-items: center; gap: 18px"><sc-if value="{{ f.plus }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="font-size: 26px; color: #94A3B8">+</span></sc-if><div style="display: flex; align-items: center; gap: 12px; width: 280px"><span style="width: 88px; height: 88px; flex-shrink: 0; border-radius: 12px; background: {{ f.bg }}; color: {{ f.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.4"><path d="{{ f.path }}"></path></svg></span><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; line-height: 1.35">{{ f.name }}</span><strong class="num" style="font-size: 15px">{{ f.priceTxt }}</strong></span></div></div>
+<div style="display: flex; align-items: center; gap: 18px"><sc-if value="{{ f.plus }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="font-size: 26px; color: #94A3B8">+</span></sc-if><div style="display: flex; align-items: center; gap: 12px; width: 280px"><span style="width: 96px; height: 96px; flex-shrink: 0; border-radius: 12px; background: #EDEDED; overflow: hidden; display: block"><img src="{{ f.img }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></span><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; line-height: 1.35">{{ f.name }}</span><strong class="num" style="font-size: 15px">{{ f.priceTxt }}</strong></span></div></div>
 </sc-for>
 <div style="flex-grow: 1"></div>
 <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end"><span class="num" style="font-size: 15px">Total for all 3: <strong style="font-size: 20px">{{ fbtTotal }}</strong></span><button type="button" onClick="{{ addAll }}" style="padding: 11px 20px; border: none; border-radius: 10px; background: #0B7A62; color: #FFFFFF; font-size: 15px; font-weight: 600">Add all 3 to cart</button></div>
@@ -260,7 +260,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 <h2 id="also-h" class="h" style="margin: 0; font-size: 20px; font-weight: 700">Customers also viewed</h2>
 <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px">
 <sc-for list="{{ also }}" as="a" hint-placeholder-count="6">
-<a href="Product.dc.html" style="border: 1px solid #E3E6EB; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; color: #0F172A; text-decoration: none"><span style="height: 150px; background: {{ a.bg }}; color: {{ a.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="52" height="52" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.3"><path d="{{ a.path }}"></path></svg></span><span style="padding: 10px 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; line-height: 1.35; height: 35px; overflow: hidden">{{ a.name }}</span><span class="num" style="font-size: 13px; color: #475569">★ {{ a.rating }}</span><strong class="num" style="font-size: 16px">{{ a.priceTxt }}</strong></span></a>
+<a href="Product.dc.html" style="border: 1px solid #E3E6EB; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; color: #0F172A; text-decoration: none"><span style="height: 190px; background: #EDEDED; display: block"><img src="{{ a.img }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></span><span style="padding: 10px 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; line-height: 1.35; height: 35px; overflow: hidden">{{ a.name }}</span><span class="num" style="font-size: 13px; color: #475569">★ {{ a.rating }}</span><strong class="num" style="font-size: 16px">{{ a.priceTxt }}</strong></span></a>
 </sc-for>
 </div>
 </section>
@@ -270,6 +270,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2760}}'>
+var IMG = {bags: '/_blob/f0296e23303ad7785ad15cdd33dced31', band: '/_blob/b4dd2ab02692a124a50ddcbcabaf0f40', blocks: '/_blob/92b1e7721a81c820b25c8e5967fbe4e3', bottles: '/_blob/5c5fc320d46eab44a3893f8fa8f2d5a4', cables: '/_blob/eb406d1f7bb0990b1027d05174904788', case: '/_blob/18b3693d822c557c95359a0c9bc0452c', chair: '/_blob/d92e1d10c784d776c3af12be40d4fbfb', charger: '/_blob/7aeed127563d8c428ea0d00441a215f4', drill: '/_blob/622ddb2223745581214bc892b96e633d', earbuds: '/_blob/1c1b504e7d5b6d38451c841c0b741a3e', headphones: '/_blob/65d2f835f744b609c4cf08512e34c1fd', lamp: '/_blob/5b77449feae43b147609852a579765b3', lotion: '/_blob/afde3ae9ae484c8b0de6244e7903ebe8', magnetic: '/_blob/f6b98311e46b40bd743ddb923d060d6e', pans: '/_blob/fa151e4819b2275299e2049608a9b8f7', pouch: '/_blob/e9c0d335e4725e17084d15935e1b975c', pb_black: '/_blob/78ee292c8a8c7b453128949f9668786d', pb_box: '/_blob/adf619c2ffe767bd0ca710ea0404eb74', pb_hand: '/_blob/4f4c0c30e814dbd1cbe46df48bbe37c2', pb_teal: '/_blob/1ae49236f4b6caf9c5462d2c14528ac4', pb_white: '/_blob/7aea1a3533add5ef94931f7052134ed4', shoe: '/_blob/5d05d04cfb10925671b0a47f0253846f', solar: '/_blob/26725387143dd3a03da9368a1a873068', speaker: '/_blob/5ab79734f97478b4316f22c309506bf6', tote: '/_blob/71e03858f5a53b333b41321b9b2fac38', tshirts: '/_blob/45a2b0408336804ccef2a3f71fb32594', watch: '/_blob/235cf71145178acba272586c4c5dc7f1'};
 var RATES = { GHS: 1, USD: 1 / 15.2, NGN: 104 };
 function fmt(ghs, cur) {
   var v = ghs * RATES[cur];
@@ -291,10 +292,10 @@ var P = {
   watch: 'M8 6h8v12H8z M9 6l1-4h4l1 4 M9 18l1 4h4l1-4 M12 10v2l1 1',
   sun: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z M12 2v2 M12 20v2 M4.9 4.9l1.4 1.4 M17.7 17.7l1.4 1.4 M2 12h2 M20 12h2 M4.9 19.1l1.4-1.4 M17.7 6.3l1.4-1.4'
 };
-var COLORS = [['Graphite black', '#1F2937', '#F1F3F6', '#334155'], ['Pearl white', '#F8FAFC', '#F6F7F9', '#475569'], ['Deep teal', '#0B7A62', '#E7F5F1', '#0B7A62']];
+var COLORS = [['Graphite black', '#1F2937', 'pb_black'], ['Pearl white', '#F8FAFC', 'pb_white'], ['Deep teal', '#0F4C3F', 'pb_teal']];
 var CAPS = [['10,000mAh', 179, 215], ['20,000mAh', 249, 299], ['30,000mAh', 329, 389]];
 var TIERS = [[10, 99, 0.864, '10–99'], [100, 499, 0.795, '100–499'], [500, 1e9, 0.731, '500+']];
-var VIEWS = [['Front', 'battery'], ['Side', 'side'], ['Ports', 'ports'], ['In the box', 'box'], ['In hand', 'hand']];
+var EXTRA = [['In use', 'pb_hand'], ['In the box', 'pb_box']];
 var HIST = [289, 299, 299, 279, 285, 299, 269, 275, 259, 265, 229, 249];
 var MONTHS = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
 var REVIEWS = [
@@ -303,8 +304,8 @@ var REVIEWS = [
   ['DM', 'David M.', '3 Aug 2026', 'Teal · 30,000mAh', 5, 'Ordered 50 for my shop', 'Bought at the 10–99 tier for resale. Arrived in six days, well packed, and all units tested fine. The seller answered questions within the hour.', 9]
 ];
 var HISTO = [[5, 68], [4, 20], [3, 7], [2, 3], [1, 2]];
-var FBT = [['This item: VoltCell power bank', 'battery', '#E7F5F1', '#0B7A62', null], ['Braided USB-C to USB-C cable, 1m', 'cable', '#EEF0FF', '#4338CA', 39], ['20W USB-C wall charger', 'plug', '#FEF6E4', '#B45309', 69]];
-var ALSO = [['Slim 10,000mAh magnetic power bank', 'battery', '#E8F3FB', '#0369A1', 4.4, 199], ['Solar power bank 25,000mAh, rugged', 'sun', '#FEF6E4', '#B45309', 4.2, 359], ['Wireless earbuds, 30h battery', 'headphones', '#EEF0FF', '#4338CA', 4.5, 279], ['Phone case with kickstand', 'phone', '#F1F3F6', '#334155', 4.3, 59], ['Fitness band, sleep tracking', 'watch', '#FDEEF1', '#BE185D', 4.1, 229], ['Zip tech organiser pouch', 'pouch', '#F1F5E6', '#4D7C0F', 4.7, 85]];
+var FBT = [['This item: VoltCell power bank', null, null], ['Braided USB-C to USB-C cable, 1m', 'cables', 39], ['20W USB-C wall charger', 'charger', 69]];
+var ALSO = [['Slim 10,000mAh magnetic power bank', 'magnetic', 4.4, 199], ['Solar power bank 25,000mAh, rugged', 'solar', 4.2, 359], ['Wireless earbuds, 30h battery', 'earbuds', 4.5, 279], ['Phone case with kickstand', 'case', 4.3, 59], ['Fitness band, sleep tracking', 'band', 4.1, 229], ['Zip tech organiser pouch', 'pouch', 4.7, 85]];
 
 class Component extends DCLogic {
   constructor(props) {
@@ -335,10 +336,10 @@ class Component extends DCLogic {
       setRetail: function () { self.setState({ biz: false, qty: 1 }); },
       setBusiness: function () { self.setState({ biz: true, qty: Math.max(10, s.qty) }); },
       retail: !s.biz,
-      view: { bg: COLORS[s.color][2], fg: COLORS[s.color][3], label: VIEWS[s.view][0] },
-      thumbs: VIEWS.map(function (v, i) { return { label: 'Show ' + v[0] + ' view', on: i === s.view, path: P[v[1]], bg: COLORS[s.color][2], fg: COLORS[s.color][3], border: i === s.view ? '#0B7A62' : '#E3E6EB', pick: function () { self.setState({ view: i }); } }; }),
+      view: s.view === 0 ? { img: IMG[COLORS[s.color][2]], label: COLORS[s.color][0], alt: 'VoltCell power bank in ' + COLORS[s.color][0] } : { img: IMG[EXTRA[s.view - 1][1]], label: EXTRA[s.view - 1][0], alt: 'VoltCell power bank, ' + EXTRA[s.view - 1][0].toLowerCase() },
+      thumbs: COLORS.map(function (c, i) { var on = s.view === 0 && s.color === i; return { label: 'Show ' + c[0], on: on, img: IMG[c[2]], border: on ? '#0B7A62' : '#E3E6EB', pick: function () { self.setState({ view: 0, color: i }); } }; }).concat(EXTRA.map(function (e, j) { var on = s.view === j + 1; return { label: 'Show ' + e[0].toLowerCase() + ' photo', on: on, img: IMG[e[1]], border: on ? '#0B7A62' : '#E3E6EB', pick: function () { self.setState({ view: j + 1 }); } }; })),
       colorName: COLORS[s.color][0],
-      colors: COLORS.map(function (c, i) { return { name: c[0], hex: c[1], on: i === s.color, ring: i === s.color ? '#0B7A62' : 'transparent', pick: function () { self.setState({ color: i }); } }; }),
+      colors: COLORS.map(function (c, i) { return { name: c[0], hex: c[1], on: i === s.color, ring: i === s.color ? '#0B7A62' : 'transparent', pick: function () { self.setState({ color: i, view: 0 }); } }; }),
       capName: cap[0],
       caps: CAPS.map(function (c, i) { return { name: c[0], priceTxt: fmt(c[1], cur), on: i === s.cap, ring: i === s.cap ? '#0B7A62' : '#E3E6EB', bg: i === s.cap ? '#F3FBF8' : '#FFFFFF', pick: function () { self.setState({ cap: i }); } }; }),
       unitTxt: fmt(unit, cur), wasTxt: fmt(cap[2], cur),
@@ -361,7 +362,7 @@ class Component extends DCLogic {
       toggleFav: function () { self.setState({ fav: !s.fav }); },
       watch: s.watch, watchBg: s.watch ? '#E7F5F1' : '#FFFFFF', watchLabel: s.watch ? 'Watching price' : 'Watch price',
       toggleWatch: function () { nextSet({ watch: !s.watch }, s.watch ? 'Price alert removed' : 'We’ll tell you when the price drops'); },
-      fbt: FBT.map(function (f, i) { return { plus: i > 0, name: f[0], path: P[f[1]], bg: f[2], fg: f[3], priceTxt: fmt(f[4] === null ? base : f[4], cur) }; }),
+      fbt: FBT.map(function (f, i) { return { plus: i > 0, name: f[0], img: IMG[f[1] || COLORS[s.color][2]], priceTxt: fmt(f[2] === null ? base : f[2], cur) }; }),
       fbtTotal: fmt(base + 39 + 69, cur),
       addAll: function () { nextSet({ cart: s.cart + 3 }, 'Added 3 items to your cart'); },
       tabs: tabNames.map(function (n, i) { return { name: n, on: i === s.tab, bar: i === s.tab ? '#0B7A62' : 'transparent', fg: i === s.tab ? '#0F172A' : '#475569', pick: function () { self.setState({ tab: i }); } }; }),
@@ -378,7 +379,7 @@ class Component extends DCLogic {
         var id = r[1], voted = !!s.votes[id];
         return { initials: r[0], name: r[1], date: r[2], variant: r[3], rating: r[4], title: r[5], body: r[6], helpful: r[7] + (voted ? 1 : 0), voted: voted, voteBg: voted ? '#E7F5F1' : '#FFFFFF', vote: function () { var v = Object.assign({}, s.votes); v[id] = !voted; self.setState({ votes: v }); } };
       }),
-      also: ALSO.map(function (a) { return { name: a[0], path: P[a[1]], bg: a[2], fg: a[3], rating: a[4], priceTxt: fmt(a[5], cur) }; })
+      also: ALSO.map(function (a) { return { name: a[0], img: IMG[a[1]], rating: a[2], priceTxt: fmt(a[3], cur) }; })
     };
   }
 }

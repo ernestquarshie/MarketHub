@@ -81,7 +81,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 </div>
 <div style="width: 400px; height: 300px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; flex-shrink: 0">
 <sc-for list="{{ slide.tiles }}" as="t" hint-placeholder-count="3">
-<div style="border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: {{ t.color }}; box-shadow: 0 8px 24px rgba(15,23,42,.06); grid-row: {{ t.row }}"><svg class="ic" width="72" height="72" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.25"><path d="{{ t.path }}"></path></svg></div>
+<div style="border-radius: 14px; background: #EDEDED; overflow: hidden; box-shadow: 0 8px 24px rgba(15,23,42,.08); grid-row: {{ t.row }}"><img src="{{ t.img }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
 </sc-for>
 </div>
 <div style="position: absolute; left: 56px; bottom: 24px; display: flex; align-items: center; gap: 10px">
@@ -114,7 +114,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 16px">
 <sc-for list="{{ categories }}" as="c" hint-placeholder-count="8">
 <a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; color: #0F172A; text-decoration: none; font-size: 14px; font-weight: 500; text-align: center">
-<span style="width: 100%; height: 112px; border-radius: 14px; background: {{ c.bg }}; color: {{ c.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="44" height="44" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.5"><path d="{{ c.path }}"></path></svg></span>
+<span style="width: 132px; height: 132px; border-radius: 66px; background: #EDEDED; overflow: hidden; display: block"><img src="{{ c.img }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></span>
 {{ c.name }}
 </a>
 </sc-for>
@@ -131,7 +131,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px">
 <sc-for list="{{ deals }}" as="p" hint-placeholder-count="6">
 <a href="Product.dc.html" class="card" style="border: 1px solid #E3E6EB; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; color: #0F172A; text-decoration: none">
-<span style="position: relative; height: 180px; background: {{ p.bg }}; color: {{ p.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="64" height="64" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.25"><path d="{{ p.path }}"></path></svg><span style="position: absolute; top: 10px; left: 10px; padding: 3px 8px; border-radius: 6px; background: #C2410C; color: #FFFFFF; font-size: 12px; font-weight: 700">-{{ p.off }}%</span></span>
+<span style="position: relative; height: 200px; background: #EDEDED; display: block"><img src="{{ p.img }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"><span style="position: absolute; top: 10px; left: 10px; padding: 3px 8px; border-radius: 6px; background: #C2410C; color: #FFFFFF; font-size: 12px; font-weight: 700">-{{ p.off }}%</span></span>
 <span style="padding: 12px; display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 14px; line-height: 1.35; height: 38px; overflow: hidden">{{ p.name }}</span>
 <span style="display: flex; align-items: baseline; gap: 8px"><span class="num" style="font-size: 18px; font-weight: 700; color: #C2410C">{{ p.priceTxt }}</span><span class="num" style="font-size: 13px; color: #475569; text-decoration: line-through">{{ p.wasTxt }}</span></span>
@@ -153,7 +153,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px">
 <sc-for list="{{ recs }}" as="p" hint-placeholder-count="6">
 <div class="card" style="position: relative; border: 1px solid #E3E6EB; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column">
-<a href="Product.dc.html" aria-label="{{ p.name }}" style="height: 200px; background: {{ p.bg }}; color: {{ p.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="68" height="68" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.25"><path d="{{ p.path }}"></path></svg></a>
+<a href="Product.dc.html" style="height: 212px; background: #EDEDED; display: block"><img src="{{ p.img }}" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block"></a>
 <button type="button" onClick="{{ p.toggleFav }}" aria-label="{{ p.favLabel }}" aria-pressed="{{ p.fav }}" style="position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 18px; border: none; background: #FFFFFF; color: {{ p.heartColor }}; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(15,23,42,.12)"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: {{ p.heartFill }}; stroke: currentColor; stroke-width: 2; stroke-linejoin: round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"></path></svg></button>
 <div style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px">
 <a href="Product.dc.html" style="font-size: 14px; line-height: 1.35; height: 38px; overflow: hidden; color: #0F172A">{{ p.name }}</a>
@@ -177,7 +177,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A
 <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
 <sc-for list="{{ bulk }}" as="b" hint-placeholder-count="4">
 <a href="Product.dc.html" class="card" style="border: 1px solid #DADDF7; border-radius: 14px; background: #FFFFFF; padding: 14px; display: flex; gap: 14px; color: #0F172A; text-decoration: none">
-<span style="width: 110px; height: 132px; flex-shrink: 0; border-radius: 10px; background: {{ b.bg }}; color: {{ b.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.4"><path d="{{ b.path }}"></path></svg></span>
+<span style="width: 124px; height: 140px; flex-shrink: 0; border-radius: 10px; background: #EDEDED; overflow: hidden; display: block"><img src="{{ b.img }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></span>
 <span style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0">
 <span style="font-size: 14px; font-weight: 500; line-height: 1.35">{{ b.name }}</span>
 <span style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin-top: 2px">
@@ -262,6 +262,7 @@ var TINT = {
   amber: ['#FEF6E4', '#B45309'], slate: ['#F1F3F6', '#334155'], rose: ['#FDEEF1', '#BE185D'],
   sky: ['#E8F3FB', '#0369A1'], olive: ['#F1F5E6', '#4D7C0F']
 };
+var IMG = {bags: '/_blob/f0296e23303ad7785ad15cdd33dced31', band: '/_blob/b4dd2ab02692a124a50ddcbcabaf0f40', blocks: '/_blob/92b1e7721a81c820b25c8e5967fbe4e3', bottles: '/_blob/5c5fc320d46eab44a3893f8fa8f2d5a4', cables: '/_blob/eb406d1f7bb0990b1027d05174904788', case: '/_blob/18b3693d822c557c95359a0c9bc0452c', chair: '/_blob/d92e1d10c784d776c3af12be40d4fbfb', charger: '/_blob/7aeed127563d8c428ea0d00441a215f4', drill: '/_blob/622ddb2223745581214bc892b96e633d', earbuds: '/_blob/1c1b504e7d5b6d38451c841c0b741a3e', headphones: '/_blob/65d2f835f744b609c4cf08512e34c1fd', lamp: '/_blob/5b77449feae43b147609852a579765b3', lotion: '/_blob/afde3ae9ae484c8b0de6244e7903ebe8', magnetic: '/_blob/f6b98311e46b40bd743ddb923d060d6e', pans: '/_blob/fa151e4819b2275299e2049608a9b8f7', pouch: '/_blob/e9c0d335e4725e17084d15935e1b975c', pb_black: '/_blob/78ee292c8a8c7b453128949f9668786d', pb_box: '/_blob/adf619c2ffe767bd0ca710ea0404eb74', pb_hand: '/_blob/4f4c0c30e814dbd1cbe46df48bbe37c2', pb_teal: '/_blob/1ae49236f4b6caf9c5462d2c14528ac4', pb_white: '/_blob/7aea1a3533add5ef94931f7052134ed4', shoe: '/_blob/5d05d04cfb10925671b0a47f0253846f', solar: '/_blob/26725387143dd3a03da9368a1a873068', speaker: '/_blob/5ab79734f97478b4316f22c309506bf6', tote: '/_blob/71e03858f5a53b333b41321b9b2fac38', tshirts: '/_blob/45a2b0408336804ccef2a3f71fb32594', watch: '/_blob/235cf71145178acba272586c4c5dc7f1'};
 var RATES = { GHS: 1, USD: 1 / 15.2, NGN: 104 };
 function fmt(ghs, cur) {
   var v = ghs * RATES[cur];
@@ -270,32 +271,32 @@ function fmt(ghs, cur) {
   return 'GHS ' + v.toFixed(2);
 }
 var SLIDES = [
-  { eyebrow: 'Back to school', title: 'Tech deals for the new term', body: 'Laptops, power banks and headphones from verified sellers, with pickup-station delivery across Ghana and Nigeria.', cta: 'Shop tech deals', bg: '#E7F5F1', accent: '#0B7A62', tiles: [['phone', 'teal', '1 / 3'], ['headphones', 'indigo', 'auto'], ['battery', 'coral', 'auto']] },
-  { eyebrow: 'For business', title: 'Source in bulk, pay less per unit', body: 'Tiered pricing, low MOQs and samples from suppliers who ship in days. Compare quotes side by side.', cta: 'Explore bulk deals', bg: '#EEF0FF', accent: '#4338CA', tiles: [['wrench', 'indigo', '1 / 3'], ['bag', 'teal', 'auto'], ['chair', 'amber', 'auto']] },
-  { eyebrow: 'Home refresh', title: 'Kitchen and living, under GHS 300', body: 'Cookware, lighting and décor with free pickup-station delivery on orders over GHS 250.', cta: 'Shop home', bg: '#FEF6E4', accent: '#B45309', tiles: [['pan', 'coral', '1 / 3'], ['lamp', 'amber', 'auto'], ['home', 'teal', 'auto']] }
+  { eyebrow: 'Back to school', title: 'Tech deals for the new term', body: 'Laptops, power banks and headphones from verified sellers, with pickup-station delivery across Ghana and Nigeria.', cta: 'Shop tech deals', bg: '#E7F5F1', accent: '#0B7A62', tiles: [['pb_hand', '1 / 3'], ['headphones', 'auto'], ['earbuds', 'auto']] },
+  { eyebrow: 'For business', title: 'Source in bulk, pay less per unit', body: 'Tiered pricing, low MOQs and samples from suppliers who ship in days. Compare quotes side by side.', cta: 'Explore bulk deals', bg: '#EEF0FF', accent: '#4338CA', tiles: [['tshirts', '1 / 3'], ['bags', 'auto'], ['bottles', 'auto']] },
+  { eyebrow: 'Home refresh', title: 'Kitchen and living, under GHS 300', body: 'Cookware, lighting and office furniture with pickup-station delivery across Ghana and Nigeria.', cta: 'Shop home', bg: '#FEF6E4', accent: '#B45309', tiles: [['pans', '1 / 3'], ['lamp', 'auto'], ['chair', 'auto']] }
 ];
-var CATS = [['Electronics', 'phone', 'teal'], ['Fashion', 'shirt', 'rose'], ['Home & Kitchen', 'home', 'amber'], ['Beauty', 'drop', 'coral'], ['Sports', 'dumbbell', 'sky'], ['Industrial & Tools', 'wrench', 'slate'], ['Groceries', 'basket', 'olive'], ['Toys & Gifts', 'gift', 'indigo']];
+var CATS = [['Electronics', 'headphones'], ['Fashion', 'tshirts'], ['Home & Kitchen', 'pans'], ['Beauty', 'lotion'], ['Sports', 'shoe'], ['Industrial & Tools', 'drill'], ['Office', 'chair'], ['Toys & Gifts', 'blocks']];
 var DEALS = [
-  ['20,000mAh power bank, 22.5W fast charge', 'battery', 'teal', 249, 299, 62],
+  ['20,000mAh power bank, 22.5W fast charge', 'pb_black', 'teal', 249, 299, 62],
   ['Wireless over-ear headphones, ANC', 'headphones', 'indigo', 489, 650, 48],
-  ['Non-stick frying pan set, 3 pieces', 'pan', 'amber', 179, 240, 71],
+  ['Non-stick frying pan set, 3 pieces', 'pans', 'amber', 179, 240, 71],
   ['Running shoes, breathable mesh', 'shoe', 'coral', 320, 420, 35],
   ['Smart watch, heart-rate + GPS', 'watch', 'slate', 610, 799, 54],
   ['LED desk lamp, 3 colour modes', 'lamp', 'sky', 115, 150, 80]
 ];
 var RECS = [
   ['r1', 'Ergonomic office chair with lumbar support', 'chair', 'slate', 1150, 4.5, 318, '2.1k', 'Kumasi Furnish', true, 5, 7, 980],
-  ['r2', 'Canvas tote bag, 12oz, custom print ready', 'bag', 'olive', 89, 4.7, 1204, '8.9k', 'StyleCo Lagos', true, 50, 5, 58],
-  ['r3', 'Shea butter body lotion, 400ml', 'drop', 'amber', 65, 4.8, 2410, '15k', 'Nkulenu Naturals', true, 24, 3, 44],
-  ['r4', 'Bluetooth speaker, waterproof IPX7', 'headphones', 'teal', 399, 4.4, 640, '3.2k', 'VoltHub', true, 10, 7, 330],
-  ['r5', 'Cordless drill driver, 20V, 2 batteries', 'wrench', 'indigo', 890, 4.6, 205, '740', 'ToolPro Tema', false, 5, 10, 760],
-  ['r6', 'Kids building blocks, 500 pieces', 'gift', 'rose', 210, 4.9, 512, '1.8k', 'PlayNest', true, 20, 6, 160]
+  ['r2', 'Canvas tote bag, 12oz, custom print ready', 'tote', 'olive', 89, 4.7, 1204, '8.9k', 'StyleCo Lagos', true, 50, 5, 58],
+  ['r3', 'Shea butter body lotion, 400ml', 'lotion', 'amber', 65, 4.8, 2410, '15k', 'Nkulenu Naturals', true, 24, 3, 44],
+  ['r4', 'Bluetooth speaker, waterproof IPX7', 'speaker', 'teal', 399, 4.4, 640, '3.2k', 'VoltHub', true, 10, 7, 330],
+  ['r5', 'Cordless drill driver, 20V, 2 batteries', 'drill', 'indigo', 890, 4.6, 205, '740', 'ToolPro Tema', false, 5, 10, 760],
+  ['r6', 'Kids building blocks, 500 pieces', 'blocks', 'rose', 210, 4.9, 512, '1.8k', 'PlayNest', true, 20, 6, 160]
 ];
 var BULK = [
-  ['Custom logo cotton T-shirts, 180gsm', 'shirt', 'rose', [[42, '50–199'], [36, '200–999'], [31, '1,000+']], 50, 7, 60],
-  ['USB-C fast-charge cables, 1m, braided', 'battery', 'teal', [[14, '100–499'], [11, '500–1,999'], [9, '2,000+']], 100, 5, 25],
-  ['Stainless steel water bottles, 750ml', 'drop', 'sky', [[38, '30–99'], [33, '100–499'], [28, '500+']], 30, 6, 55],
-  ['Kraft paper shopping bags, printed', 'bag', 'amber', [[2.4, '500–1,999'], [1.9, '2,000+'], [1.5, '10,000+']], 500, 12, 0]
+  ['Custom logo cotton T-shirts, 180gsm', 'tshirts', 'rose', [[42, '50–199'], [36, '200–999'], [31, '1,000+']], 50, 7, 60],
+  ['USB-C fast-charge cables, 1m, braided', 'cables', 'teal', [[14, '100–499'], [11, '500–1,999'], [9, '2,000+']], 100, 5, 25],
+  ['Stainless steel water bottles, 750ml', 'bottles', 'sky', [[38, '30–99'], [33, '100–499'], [28, '500+']], 30, 6, 55],
+  ['Kraft paper shopping bags, printed', 'bags', 'amber', [[2.4, '500–1,999'], [1.9, '2,000+'], [1.5, '10,000+']], 500, 12, 0]
 ];
 var SELLERS = [
   ['VoltHub', 'VH', 'Accra, Ghana', 'teal', true, 5, '4.8', '98%', '412'],
@@ -338,28 +339,28 @@ class Component extends DCLogic {
       setBusiness: function () { self.setState({ biz: true }); },
       slide: {
         eyebrow: sl.eyebrow, title: sl.title, body: sl.body, cta: sl.cta, bg: sl.bg, accent: sl.accent,
-        tiles: sl.tiles.map(function (t) { return { path: P[t[0]], color: TINT[t[1]][1], row: t[2] }; })
+        tiles: sl.tiles.map(function (t) { return { img: IMG[t[0]], row: t[1] }; })
       },
       dots: SLIDES.map(function (x, i) {
         return { label: 'Show slide ' + (i + 1), w: i === s.slide ? '28px' : '8px', bg: i === s.slide ? '#0F172A' : '#94A3B8', pick: function () { self.setState({ slide: i }); } };
       }),
       prevSlide: function () { self.setState({ slide: (s.slide + SLIDES.length - 1) % SLIDES.length }); },
       nextSlide: function () { self.setState({ slide: (s.slide + 1) % SLIDES.length }); },
-      categories: CATS.map(function (c) { return { name: c[0], path: P[c[1]], bg: TINT[c[2]][0], fg: TINT[c[2]][1] }; }),
+      categories: CATS.map(function (c) { return { name: c[0], img: IMG[c[1]] }; }),
       deals: DEALS.map(function (d) {
-        return { name: d[0], path: P[d[1]], bg: TINT[d[2]][0], fg: TINT[d[2]][1], priceTxt: fmt(d[3], cur), wasTxt: fmt(d[4], cur), off: Math.round((1 - d[3] / d[4]) * 100), claimed: d[5], claimW: d[5] + '%' };
+        return { name: d[0], img: IMG[d[1]], bg: TINT[d[2]][0], fg: TINT[d[2]][1], priceTxt: fmt(d[3], cur), wasTxt: fmt(d[4], cur), off: Math.round((1 - d[3] / d[4]) * 100), claimed: d[5], claimW: d[5] + '%' };
       }),
       recs: RECS.map(function (r) {
         var fav = !!s.favs[r[0]];
         return {
-          name: r[1], path: P[r[2]], bg: TINT[r[3]][0], fg: TINT[r[3]][1], priceTxt: fmt(r[4], cur), rating: r[5].toFixed(1), reviews: r[6].toLocaleString('en-US'), starW: (r[5] / 5 * 100) + '%',
+          name: r[1], img: IMG[r[2]], bg: TINT[r[3]][0], fg: TINT[r[3]][1], priceTxt: fmt(r[4], cur), rating: r[5].toFixed(1), reviews: r[6].toLocaleString('en-US'), starW: (r[5] / 5 * 100) + '%',
           sold: r[7], seller: r[8], verified: r[9], moq: r[10], lead: r[11], bizTxt: fmt(r[12], cur), retail: !s.biz, biz: s.biz,
           fav: fav, favLabel: fav ? 'Remove from wishlist' : 'Save to wishlist', heartColor: fav ? '#C2410C' : '#475569', heartFill: fav ? '#C2410C' : 'none',
           toggleFav: function () { var f = Object.assign({}, s.favs); f[r[0]] = !fav; self.setState({ favs: f }); }
         };
       }),
       bulk: BULK.map(function (b) {
-        return { name: b[0], path: P[b[1]], bg: TINT[b[2]][0], fg: TINT[b[2]][1], tiers: b[3].map(function (t) { return { price: fmt(t[0], cur), range: t[1] }; }), moq: b[4], lead: b[5], sampleTxt: b[6] === 0 ? 'free' : fmt(b[6], cur) };
+        return { name: b[0], img: IMG[b[1]], bg: TINT[b[2]][0], fg: TINT[b[2]][1], tiers: b[3].map(function (t) { return { price: fmt(t[0], cur), range: t[1] }; }), moq: b[4], lead: b[5], sampleTxt: b[6] === 0 ? 'free' : fmt(b[6], cur) };
       }),
       sellers: SELLERS.map(function (x) { return { name: x[0], initials: x[1], place: x[2], bg: TINT[x[3]][0], fg: TINT[x[3]][1], star: x[4], years: x[5], rating: x[6], resp: x[7], items: x[8] }; }),
       trust: TRUST.map(function (t) { return { path: P[t[0]], title: t[1], sub: t[2] }; })

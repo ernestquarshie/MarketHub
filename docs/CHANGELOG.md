@@ -11,3 +11,4 @@
 | 2026-09-26 | 3 — Design | Design drafted: Next.js 16 + TS + Tailwind v4/shadcn, Neon Postgres + Drizzle, Better Auth, Stripe + Paystack (test), Vercel. Pending approval. |
 | 2026-09-26 | 3 — Design | **Approved** by Ern. Stack: Neon + Drizzle + Better Auth + Cloudinary. Brand: MarketHub, teal/coral/indigo. Clickable HTML prototype (home + product page) requested before Stage 4. |
 | 2026-09-26 | 3 — Design | Clickable prototype published (Home, Product desktop, Product mobile); sources in `docs/prototype/`. Pending review. |
+| 2026-09-26 | 3 — Design | Prototype revised per Ern: icon placeholders replaced with 27 AI-generated sample product photos (Canva). Real build will use seller-uploaded photos via Cloudinary. |
