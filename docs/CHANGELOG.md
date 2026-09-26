@@ -16,3 +16,4 @@
 | 2026-09-26 | 4 — Build plan | Build plan drafted: M1 Foundation → M2 Catalogue → M3 Checkout → M4 B2B → M5 Seller Centre → M6 Admin → M7 Hardening. Pending approval. |
 | 2026-09-26 | 4 — Build plan | **Approved** by Ern. |
 | 2026-09-26 | 4 — M1 Foundation | Built on branch `m1-foundation`: scaffold, schema (44 tables), seed, Better Auth + roles, layout, tests + CI. 29 unit + 21 E2E/a11y tests passing. Pending demo approval. |
+| 2026-09-26 | 4 — M1 Foundation | **Approved** by Ern ("Go on"). Merged to `main`. M2 Catalogue started on `m2-catalogue`. |

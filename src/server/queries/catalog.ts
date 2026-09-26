@@ -1,6 +1,6 @@
 import "server-only";
 import { cache } from "react";
-import { and, asc, desc, eq, gt, isNull, lte, or } from "drizzle-orm";
+import { and, asc, desc, eq, gt, inArray, isNull, lte, or, sql } from "drizzle-orm";
 import { db, schema } from "@/server/db";
 import { DEFAULT_RATES, type Currency, type Rates } from "@/lib/money";
 
@@ -90,6 +90,85 @@ export const getFeaturedProducts = cache(async (limit = 12): Promise<ProductCard
     with: cardWith(now),
   });
   return rows.map(toCard);
+});
+
+/** Card data for a list of product ids, preserving the given order. */
+export async function getProductCardsByIds(ids: string[]): Promise<ProductCardData[]> {
+  if (!ids.length) return [];
+  const rows = await db.query.product.findMany({
+    where: and(inArray(schema.product.id, ids), eq(schema.product.status, "published")),
+    columns: cardColumns,
+    with: cardWith(new Date()),
+  });
+  const byId = new Map(rows.map((r) => [r.id, toCard(r)]));
+  return ids.map((id) => byId.get(id)).filter((x): x is ProductCardData => !!x);
+}
+
+/** Products currently in an active flash deal, with deal progress. */
+export const getActiveDeals = cache(async (limit = 12) => {
+  const now = new Date();
+  const deals = await db.query.flashDeal.findMany({
+    where: and(lte(schema.flashDeal.startsAt, now), gt(schema.flashDeal.endsAt, now)),
+    orderBy: asc(schema.flashDeal.endsAt),
+    limit,
+  });
+  const cards = await getProductCardsByIds(deals.map((d) => d.productId));
+  return cards.map((card) => {
+    const d = deals.find((x) => x.productId === card.id)!;
+    return { card, endsAt: d.endsAt, claimedPct: Math.round((d.claimed / d.stockCap) * 100) };
+  });
+});
+
+/** Ready-to-ship products with bulk tiers, for the Alibaba-style bulk rail. */
+export const getBulkProducts = cache(async (limit = 8): Promise<(ProductCardData & { tiers: { minQty: number; maxQty: number | null; unitPrice: number }[] })[]> => {
+  const rows = await db.query.product.findMany({
+    where: and(eq(schema.product.status, "published"), eq(schema.product.readyToShip, true), gt(schema.product.moq, 1)),
+    orderBy: desc(schema.product.soldCount),
+    limit,
+    columns: cardColumns,
+    with: { ...cardWith(new Date()), tiers: { columns: { minQty: true, maxQty: true, unitPrice: true }, orderBy: asc(schema.priceTier.minQty) } },
+  });
+  return rows.filter((r) => r.tiers.length).map((r) => ({ ...toCard(r), tiers: r.tiers }));
+});
+
+export interface SellerCardData {
+  id: string;
+  slug: string;
+  name: string;
+  country: string;
+  city: string;
+  isVerified: boolean;
+  isStarSeller: boolean;
+  ratingAvg: number;
+  ratingCount: number;
+  responseRate: number;
+  joinedAt: Date;
+  productCount: number;
+  logoUrl: string | null;
+}
+
+export const getTopSellers = cache(async (limit = 8): Promise<SellerCardData[]> => {
+  const rows = await db
+    .select({
+      id: schema.seller.id,
+      slug: schema.seller.slug,
+      name: schema.seller.name,
+      country: schema.seller.country,
+      city: schema.seller.city,
+      isVerified: schema.seller.isVerified,
+      isStarSeller: schema.seller.isStarSeller,
+      ratingAvg: schema.seller.ratingAvg,
+      ratingCount: schema.seller.ratingCount,
+      responseRate: schema.seller.responseRate,
+      joinedAt: schema.seller.joinedAt,
+      logoUrl: schema.seller.logoUrl,
+      productCount: sql<number>`(select count(*)::int from product p where p.seller_id = ${schema.seller.id} and p.status = 'published')`,
+    })
+    .from(schema.seller)
+    .where(eq(schema.seller.status, "approved"))
+    .orderBy(desc(schema.seller.isStarSeller), desc(schema.seller.ratingAvg))
+    .limit(limit);
+  return rows;
 });
 
 export const getActiveBanners = cache(async () => {

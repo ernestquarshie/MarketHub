@@ -1,0 +1,200 @@
+/**
+ * M2 catalogue expansion: more sellers, subcategories and products, including
+ * competing listings of similar items from different suppliers (a normal marketplace pattern).
+ */
+import type { ProductSeed, SellerSeed } from "./data";
+
+export const MORE_SELLERS: SellerSeed[] = [
+  { key: "accratech", name: "Accra Tech Supplies", owner: "Nii Armah", country: "GH", city: "Accra", currency: "GHS", status: "approved", verified: true, star: false, years: 3, response: 94, onTime: 93, story: "Computer accessories and office tech for schools, SMEs and home offices across Ghana." },
+  { key: "hometex", name: "Guangzhou Hometex Co.", owner: "Chen Wei", country: "CN", city: "Guangzhou", currency: "USD", status: "approved", verified: true, star: true, years: 11, response: 96, onTime: 95, story: "Manufacturer of bedding, tableware and small kitchen appliances. OEM and private label from 300 units." },
+  { key: "lagosbeauty", name: "Lagos Beauty Co.", owner: "Funmi Balogun", country: "NG", city: "Lagos", currency: "NGN", status: "approved", verified: true, star: false, years: 2, response: 97, onTime: 92, story: "Natural skin and hair care, made in Nigeria with shea, cocoa and plant oils." },
+];
+
+/** New subcategories keyed by parent slug. */
+export const MORE_CATEGORIES: Record<string, { slug: string; name: string }[]> = {
+  electronics: [{ slug: "computer-accessories", name: "Computer accessories" }],
+  fashion: [
+    { slug: "shoes", name: "Shoes" },
+    { slug: "hats-caps", name: "Hats & caps" },
+    { slug: "fabrics", name: "Fabrics & textiles" },
+  ],
+  "home-kitchen": [
+    { slug: "kitchen-appliances", name: "Kitchen appliances" },
+    { slug: "tableware", name: "Tableware" },
+    { slug: "bedding", name: "Bedding" },
+  ],
+  beauty: [{ slug: "hair-care", name: "Hair care" }],
+  sports: [
+    { slug: "yoga-fitness", name: "Yoga & fitness" },
+    { slug: "team-sports", name: "Team sports" },
+  ],
+  "industrial-tools": [{ slug: "safety-equipment", name: "Safety equipment" }],
+};
+
+const v = (options: Record<string, string>, stock: number) => ({ options, stock });
+
+export const MORE_PRODUCTS: ProductSeed[] = [
+  {
+    slug: "adjustable-aluminium-laptop-stand", title: "Adjustable aluminium laptop stand, foldable, 10–17\"", brand: "Deskline", seller: "accratech",
+    category: "computer-accessories", images: ["laptop-stand"], price: 189, compareAt: 230, tiers: [[10, 0.85], [50, 0.76]], moq: 10, weight: 900, sold: 2300, featured: true,
+    bullets: ["Raises your screen to eye level", "Six height settings", "Folds flat for travel"], description: "A sturdy aluminium stand that improves posture and keeps your laptop cool.",
+    specs: { Material: "Aluminium alloy", Fits: "10–17 inch laptops", Weight: "900 g" }, variants: [v({ Colour: "Silver" }, 120)], reviewTopic: "laptop stand",
+  },
+  {
+    slug: "wireless-ergonomic-mouse", title: "Wireless ergonomic mouse, silent clicks, USB receiver", brand: "Deskline", seller: "accratech",
+    category: "computer-accessories", images: ["mouse"], price: 85, tiers: [[20, 0.82], [100, 0.7]], moq: 20, weight: 110, sold: 4100,
+    bullets: ["Silent clicks", "18-month battery life", "Plug-and-play USB receiver"], description: "A comfortable wireless mouse for long work days.",
+    specs: { Connection: "2.4 GHz USB", DPI: "800–1600" }, variants: [v({ Colour: "Black" }, 400)], reviewTopic: "mouse",
+  },
+  {
+    slug: "wireless-mouse-bulk-oem", title: "Wireless mouse, OEM logo printing, bulk pack", brand: "Brightline", seller: "brightline",
+    category: "computer-accessories", images: ["mouse"], price: 3.9, tiers: [[100, 0.8], [500, 0.66], [2000, 0.55]], moq: 100, leadDays: 12, sample: 5, weight: 110, sold: 38000,
+    bullets: ["Your logo printed from 500 units", "Retail or bulk packaging", "CE/FCC certified"], description: "Factory-direct wireless mice for resellers and corporate gifts.",
+    specs: { Connection: "2.4 GHz USB", Packaging: "Bulk or retail box" }, variants: [v({ Colour: "Black" }, 50000)], reviewTopic: "mouse",
+  },
+  {
+    slug: "compact-mechanical-keyboard-65", title: "Compact 65% mechanical keyboard, hot-swap, teal keycaps", brand: "Keyforge", seller: "brightline",
+    category: "computer-accessories", images: ["keyboard"], price: 38, compareAt: 49, tiers: [[20, 0.84], [100, 0.74]], moq: 20, leadDays: 10, sample: 42, weight: 700, sold: 1250,
+    bullets: ["Hot-swappable switches", "Bluetooth and USB-C", "PBT keycaps"], description: "A compact keyboard with a satisfying typing feel.",
+    specs: { Layout: "65%", Connection: "Bluetooth 5.1, USB-C" }, variants: [v({ Switch: "Brown" }, 500), v({ Switch: "Red" }, 420)], reviewTopic: "keyboard",
+  },
+  {
+    slug: "usb-c-hub-7-in-1", title: "7-in-1 USB-C hub with 4K HDMI, 100W PD, SD reader", brand: "Deskline", seller: "accratech",
+    category: "computer-accessories", images: ["usb-hub"], price: 249, compareAt: 299, tiers: [[10, 0.86], [50, 0.78]], moq: 10, weight: 80, sold: 1700,
+    bullets: ["4K HDMI output", "100W pass-through charging", "SD and microSD readers"], description: "One adapter for monitors, drives, cards and charging.",
+    specs: { Ports: "HDMI, 2× USB-A, USB-C PD, SD, microSD", Output: "4K@30Hz" }, variants: [v({ Colour: "Space grey" }, 90)], reviewTopic: "USB hub",
+  },
+  {
+    slug: "usb-c-hub-bulk-oem", title: "USB-C hub 7-in-1, OEM, bulk carton", brand: "Brightline", seller: "brightline",
+    category: "computer-accessories", images: ["usb-hub"], price: 9.8, tiers: [[50, 0.86], [300, 0.74], [1000, 0.64]], moq: 50, leadDays: 14, sample: 12, weight: 80, sold: 12500,
+    bullets: ["Custom logo and packaging", "Aluminium shell", "Tested before shipping"], description: "Bulk USB-C hubs for electronics shops and IT resellers.",
+    specs: { Ports: "HDMI, 2× USB-A, USB-C PD, SD, microSD" }, variants: [v({ Colour: "Space grey" }, 9000)], reviewTopic: "USB hub",
+  },
+  {
+    slug: "led-ring-light-tripod-12in", title: "12\" LED ring light with tripod and phone holder", brand: "Glowcast", seller: "volthub",
+    category: "phone-accessories", images: ["ring-light"], price: 229, compareAt: 280, tiers: [[10, 0.85], [50, 0.75]], moq: 10, weight: 1400, sold: 3100, featured: true,
+    bullets: ["3 colour modes, 10 brightness levels", "Tripod extends to 1.6 m", "Bluetooth remote"], description: "Bright, even light for video calls, content creation and makeup.",
+    specs: { Diameter: "12 in", Height: "Up to 160 cm" }, variants: [v({ Size: "12 inch" }, 70)], reviewTopic: "ring light",
+  },
+  {
+    slug: "african-wax-print-fabric-6-yards", title: "African wax print fabric (ankara), 6 yards, 100% cotton", brand: "Kente Threads", seller: "kentethreads",
+    category: "fabrics", images: ["wax-print"], price: 145, tiers: [[10, 0.86], [50, 0.76], [200, 0.68]], moq: 10, weight: 900, sold: 9800, featured: true,
+    bullets: ["6 yards of 100% cotton", "Vibrant colours that hold after washing", "Dozens of patterns in stock"], description: "Bold, high-quality wax print for dresses, shirts and home décor. Wholesale bolts for tailors and boutiques.",
+    specs: { Length: "6 yards", Width: "46 in", Material: "100% cotton" },
+    variants: [v({ Pattern: "Orange geometric" }, 300), v({ Pattern: "Teal triangles" }, 260), v({ Pattern: "Yellow mix" }, 180)], reviewTopic: "fabric",
+  },
+  {
+    slug: "leather-crossbody-bag", title: "Genuine leather crossbody saddle bag, tan", brand: "StyleCo", seller: "styleco",
+    category: "bags", images: ["crossbody"], price: 38500, compareAt: 45000, tiers: [[10, 0.85], [50, 0.75]], moq: 10, weight: 500, sold: 1400,
+    bullets: ["Full-grain leather", "Adjustable strap", "Handmade in Lagos"], description: "A timeless everyday bag that softens with age.",
+    specs: { Size: "24 × 19 × 8 cm", Material: "Full-grain leather" }, variants: [v({ Colour: "Tan" }, 60)], reviewTopic: "bag",
+  },
+  {
+    slug: "white-leather-look-sneakers-women", title: "Women's white leather-look sneakers", brand: "StyleCo", seller: "styleco",
+    category: "shoes", images: ["sneaker"], price: 24500, compareAt: 29000, tiers: [[12, 0.8], [60, 0.7]], moq: 12, weight: 700, sold: 2600,
+    bullets: ["Cushioned insole", "Easy-clean upper", "Sizes 36–42"], description: "Clean, versatile sneakers that go with everything.",
+    specs: { Upper: "PU leather", Sole: "Rubber" }, variants: [v({ Size: "EU 38" }, 40), v({ Size: "EU 39" }, 52), v({ Size: "EU 40" }, 35)], reviewTopic: "sneakers",
+  },
+  {
+    slug: "blank-baseball-caps-cotton", title: "Blank cotton baseball caps, embroidery ready", brand: "Kente Threads", seller: "kentethreads",
+    category: "hats-caps", images: ["caps"], price: 35, tiers: [[50, 0.72], [200, 0.6], [1000, 0.52]], moq: 50, leadDays: 6, sample: 35, weight: 90, sold: 7400,
+    bullets: ["100% cotton twill", "Adjustable strap", "Logo embroidery from 50 pieces"], description: "Quality blank caps for teams, events and brand merch.",
+    specs: { Material: "Cotton twill", Fit: "Adjustable" }, variants: [v({ Colour: "Navy" }, 800), v({ Colour: "White" }, 700), v({ Colour: "Olive" }, 500)], reviewTopic: "caps",
+  },
+  {
+    slug: "pique-polo-shirt-uniform", title: "Piqué cotton polo shirt, uniform and corporate wear", brand: "Kente Threads", seller: "kentethreads",
+    category: "tops-tshirts", images: ["polo"], price: 85, tiers: [[30, 0.76], [150, 0.66], [500, 0.58]], moq: 30, leadDays: 8, sample: 85, weight: 230, sold: 5200,
+    bullets: ["220gsm piqué cotton", "Embroidery or print", "Sizes S–3XL"], description: "A smart, hard-wearing polo for staff uniforms and events.",
+    specs: { Material: "Cotton piqué", Weight: "220gsm" }, variants: [v({ Colour: "Navy", Size: "M" }, 400), v({ Colour: "Navy", Size: "L" }, 380)], attrs: { material: "Cotton" }, reviewTopic: "polo",
+  },
+  {
+    slug: "cotton-t-shirt-bulk-factory", title: "Plain cotton T-shirts, factory direct, 160gsm", brand: "Hometex", seller: "hometex",
+    category: "tops-tshirts", images: ["tshirts"], price: 1.9, tiers: [[300, 0.9], [1000, 0.8], [5000, 0.7]], moq: 300, leadDays: 18, sample: 4, weight: 170, sold: 64000,
+    bullets: ["160gsm combed cotton", "20+ colours", "Private label and printing"], description: "Low-cost blanks for large orders, shipped by sea or air.",
+    specs: { Material: "Cotton", Weight: "160gsm" }, variants: [v({ Colour: "Assorted" }, 100000)], attrs: { material: "Cotton" }, reviewTopic: "T-shirt",
+  },
+  {
+    slug: "stainless-steel-electric-kettle-1-7l", title: "Stainless steel electric kettle, 1.7 L, auto shut-off", brand: "Accra Home", seller: "accrahome",
+    category: "kitchen-appliances", images: ["kettle"], price: 165, compareAt: 199, tiers: [[10, 0.85], [50, 0.76]], moq: 10, weight: 1100, sold: 4800, featured: true,
+    bullets: ["Boils 1.7 L in under 5 minutes", "Auto shut-off and boil-dry protection", "Type G plug"], description: "A fast, reliable kettle with a brushed steel finish.",
+    specs: { Capacity: "1.7 L", Power: "2200W" }, variants: [v({ Finish: "Brushed steel" }, 90)], reviewTopic: "kettle",
+  },
+  {
+    slug: "electric-kettle-oem-bulk", title: "Electric kettle 1.7 L, OEM private label", brand: "Hometex", seller: "hometex",
+    category: "kitchen-appliances", images: ["kettle"], price: 7.4, tiers: [[100, 0.9], [500, 0.8], [2000, 0.72]], moq: 100, leadDays: 20, sample: 12, weight: 1100, sold: 21000,
+    bullets: ["UK, EU and US plug options", "Your brand on the kettle and box", "CB/CE certified"], description: "Private-label kettles for retailers and distributors.",
+    specs: { Capacity: "1.7 L", Power: "1850–2200W" }, variants: [v({ Plug: "Type G" }, 6000)], reviewTopic: "kettle",
+  },
+  {
+    slug: "countertop-blender-glass-jar-1-5l", title: "Countertop blender with 1.5 L glass jar, 600W", brand: "Accra Home", seller: "accrahome",
+    category: "kitchen-appliances", images: ["blender"], price: 349, compareAt: 420, tiers: [[10, 0.86], [50, 0.78]], moq: 10, weight: 3200, sold: 2900,
+    bullets: ["600W motor crushes ice", "Thick glass jar", "3 speeds plus pulse"], description: "Smoothies, soups and pepper blends in seconds.",
+    specs: { Power: "600W", Capacity: "1.5 L" }, variants: [v({ Colour: "Black" }, 45)], reviewTopic: "blender",
+  },
+  {
+    slug: "ceramic-dinnerware-set-12-piece", title: "White ceramic dinnerware set, 12 pieces", brand: "Hometex", seller: "hometex",
+    category: "tableware", images: ["plates"], price: 16, compareAt: 22, tiers: [[50, 0.8], [300, 0.68]], moq: 50, leadDays: 15, sample: 18, weight: 5200, sold: 8700,
+    bullets: ["4 dinner plates, 4 side plates, 4 bowls", "Microwave and dishwasher safe", "Hotel-grade porcelain"], description: "Classic white tableware for homes, hotels and restaurants.",
+    specs: { Pieces: "12", Material: "Porcelain" }, variants: [v({ Set: "12 pieces" }, 2000)], reviewTopic: "dinnerware",
+  },
+  {
+    slug: "cotton-bedsheet-set-queen", title: "Cotton bedsheet set with 2 pillowcases, queen", brand: "Hometex", seller: "hometex",
+    category: "bedding", images: ["bedsheets"], price: 14, compareAt: 19, tiers: [[50, 0.8], [300, 0.7]], moq: 50, leadDays: 15, sample: 15, weight: 1300, sold: 11200,
+    bullets: ["Breathable 100% cotton", "Deep-pocket fitted sheet", "Six colours"], description: "Soft, cool bedding for hot nights — popular with hotels and guest houses.",
+    specs: { Size: "Queen", Material: "100% cotton, 200TC" }, variants: [v({ Colour: "Sage" }, 1500), v({ Colour: "White" }, 2200)], reviewTopic: "bedsheets",
+  },
+  {
+    slug: "african-black-soap-bars-6-pack", title: "Raw African black soap bars, 6-pack", brand: "Nkulenu Naturals", seller: "nkulenu",
+    category: "body-care", images: ["black-soap"], price: 75, tiers: [[24, 0.8], [120, 0.68]], moq: 24, weight: 700, sold: 18000,
+    bullets: ["Handmade from plantain ash and shea", "Gentle on sensitive skin", "No fragrance or dyes"], description: "Traditional black soap from Ghana for face and body.",
+    specs: { Pack: "6 × 110 g" }, variants: [v({ Pack: "6 bars" }, 600)], reviewTopic: "black soap",
+  },
+  {
+    slug: "natural-hair-growth-oil-60ml", title: "Natural hair growth oil with castor and rosemary, 60 ml", brand: "Lagos Beauty", seller: "lagosbeauty",
+    category: "hair-care", images: ["hair-oil"], price: 6500, compareAt: 8000, tiers: [[24, 0.78], [120, 0.66]], moq: 24, weight: 120, sold: 9400,
+    bullets: ["Castor, rosemary and peppermint oils", "For scalp and edges", "No mineral oil"], description: "A light oil that nourishes the scalp and softens hair.",
+    specs: { Volume: "60 ml" }, variants: [v({ Size: "60 ml" }, 900)], reviewTopic: "hair oil",
+  },
+  {
+    slug: "shea-butter-lotion-lagos-400ml", title: "Shea and cocoa butter body lotion, 400 ml", brand: "Lagos Beauty", seller: "lagosbeauty",
+    category: "body-care", images: ["lotion"], price: 5200, tiers: [[24, 0.8], [120, 0.7]], moq: 24, weight: 450, sold: 6100,
+    bullets: ["Shea and cocoa butter", "48-hour moisture", "Light cocoa scent"], description: "Rich everyday lotion for dry skin.",
+    specs: { Volume: "400 ml" }, variants: [v({ Size: "400 ml" }, 700)], reviewTopic: "lotion",
+  },
+  {
+    slug: "non-slip-yoga-mat-6mm", title: "Non-slip yoga mat, 6 mm, with carry strap", brand: "PeakRun", seller: "peakrun",
+    category: "yoga-fitness", images: ["yoga-mat"], price: 18, compareAt: 25, tiers: [[20, 0.82], [100, 0.7]], moq: 20, weight: 900, sold: 3500,
+    bullets: ["6 mm cushioning", "Non-slip texture on both sides", "Carry strap included"], description: "A comfortable, grippy mat for yoga, pilates and home workouts.",
+    specs: { Size: "183 × 61 cm", Thickness: "6 mm" }, variants: [v({ Colour: "Teal" }, 160)], reviewTopic: "yoga mat",
+  },
+  {
+    slug: "match-football-size-5", title: "Match football, size 5, hand-stitched", brand: "PeakRun", seller: "peakrun",
+    category: "team-sports", images: ["football"], price: 16, tiers: [[20, 0.8], [100, 0.68]], moq: 20, weight: 430, sold: 4400,
+    bullets: ["Official size and weight", "Hand-stitched panels", "For grass and turf"], description: "A durable ball for matches and training. Bulk pricing for academies and schools.",
+    specs: { Size: "5", Weight: "430 g" }, variants: [v({ Size: "5" }, 300)], reviewTopic: "football",
+  },
+  {
+    slug: "safety-hard-hat-construction", title: "Safety hard hat with adjustable ratchet, EN 397", brand: "ToolPro", seller: "toolpro",
+    category: "safety-equipment", images: ["hard-hats"], price: 45, tiers: [[20, 0.84], [100, 0.72], [500, 0.64]], moq: 20, weight: 380, sold: 6800,
+    bullets: ["EN 397 certified", "Ratchet adjustment", "Vented shell"], description: "Head protection for construction, mining and warehouses.",
+    specs: { Standard: "EN 397", Material: "HDPE" }, variants: [v({ Colour: "Yellow" }, 900), v({ Colour: "White" }, 400)], reviewTopic: "hard hat",
+  },
+  {
+    slug: "corrugated-shipping-boxes-assorted", title: "Corrugated shipping boxes, 3 sizes, printable", brand: "PackRight", seller: "packright",
+    category: "packaging", images: ["boxes"], price: 3.2, tiers: [[200, 0.9], [1000, 0.75], [5000, 0.62]], moq: 200, leadDays: 7, sample: 0, weight: 300, sold: 140000,
+    bullets: ["Double-wall corrugated board", "Small, medium and large", "Logo printing from 1,000"], description: "Strong boxes for e-commerce and moving, made in Tema.",
+    specs: { Board: "Double-wall", Sizes: "S / M / L" }, variants: [v({ Size: "Medium" }, 50000)], reviewTopic: "boxes",
+  },
+  {
+    slug: "voltcell-10000mah-power-bank-accra-tech", title: "Slim 10,000mAh power bank, dual USB", brand: "Deskline", seller: "accratech",
+    category: "power-banks", images: ["powerbank-white"], price: 139, compareAt: 169, tiers: [[20, 0.82], [100, 0.72]], moq: 20, weight: 220, sold: 2700,
+    bullets: ["Charges a phone about twice", "Dual USB outputs", "Slim and light"], description: "An affordable everyday power bank.",
+    specs: { Capacity: "10,000mAh" }, variants: [v({ Colour: "White" }, 150)], attrs: { capacity: "10,000mAh" }, reviewTopic: "power bank",
+  },
+  {
+    slug: "canvas-tote-bags-factory-bulk", title: "Cotton canvas tote bags, factory direct, custom print", brand: "Hometex", seller: "hometex",
+    category: "bags", images: ["tote"], price: 1.6, tiers: [[500, 0.88], [2000, 0.75], [10000, 0.62]], moq: 500, leadDays: 18, sample: 3, weight: 150, sold: 210000,
+    bullets: ["8oz and 12oz canvas", "Screen print up to 4 colours", "Sea or air freight"], description: "High-volume tote bags for promotions and retail.",
+    specs: { Material: "Cotton canvas" }, variants: [v({ Weight: "12oz" }, 200000)], reviewTopic: "tote bag",
+  },
+];

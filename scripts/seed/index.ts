@@ -10,7 +10,23 @@ import { hashPassword } from "better-auth/crypto";
 import { db, schema as s } from "../../src/server/db";
 import { convert, toMinor, type Currency } from "../../src/lib/money";
 import { slugify } from "../../src/lib/utils";
-import { CATEGORIES, DEMO_PASSWORD, DEMO_USERS, PRODUCTS, REVIEWER_NAMES, REVIEW_TEMPLATES, SELLERS } from "./data";
+import {
+  CATEGORIES as BASE_CATEGORIES,
+  DEMO_PASSWORD,
+  DEMO_USERS,
+  PRODUCTS as BASE_PRODUCTS,
+  REVIEWER_NAMES,
+  REVIEW_TEMPLATES,
+  SELLERS as BASE_SELLERS,
+} from "./data";
+import { MORE_CATEGORIES, MORE_PRODUCTS, MORE_SELLERS } from "./data-more";
+
+const SELLERS = [...BASE_SELLERS, ...MORE_SELLERS];
+const PRODUCTS = [...BASE_PRODUCTS, ...MORE_PRODUCTS];
+const CATEGORIES = BASE_CATEGORIES.map((c) => ({
+  ...c,
+  children: [...c.children, ...(MORE_CATEGORIES[c.slug] ?? []).map((x) => ({ ...x, attributes: undefined }))],
+}));
 
 // ---------------------------------------------------------------------------
 // Deterministic helpers
