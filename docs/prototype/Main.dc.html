@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MarketHub — Home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:#0F172A;background:#FFFFFF}
+a{color:#0B7A62;text-decoration:none}a:hover{color:#075C49;text-decoration:underline}
+.ic{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.icf{fill:currentColor;stroke:none}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A62;outline-offset:2px}
+.h{font-family:'Plus Jakarta Sans',Inter,sans-serif}
+.num{font-variant-numeric:tabular-nums}
+.card:hover{box-shadow:0 6px 20px rgba(15,23,42,.08);border-color:#CBD2DC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 2800px; display: flex; flex-direction: column; background: #FFFFFF; overflow: hidden">
+
+<div style="height: 36px; flex-shrink: 0; background: #0F172A; color: #E6EAF2; font-size: 13px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px">
+<div style="display: flex; align-items: center; gap: 8px"><span style="padding: 2px 8px; border-radius: 999px; background: #1F2A44; color: #34D3A6; font-weight: 600; font-size: 12px">Demo</span><span>Payments run in test mode. No real money moves.</span></div>
+<div style="display: flex; gap: 24px"><a href="#" style="color: #E6EAF2">Sell on MarketHub</a><a href="#" style="color: #E6EAF2">Track an order</a><a href="#" style="color: #E6EAF2">Help centre</a></div>
+</div>
+
+<header style="flex-shrink: 0; border-bottom: 1px solid #E3E6EB; background: #FFFFFF">
+<div style="height: 76px; display: flex; align-items: center; gap: 24px; padding: 0 32px">
+<a href="Main.dc.html" aria-label="MarketHub home" style="display: flex; align-items: center; gap: 10px; color: #0F172A; text-decoration: none">
+<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#0B7A62"></rect><path d="M9 23V12l8 6 8-6v11" style="fill: none; stroke: #FFFFFF; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round"></path></svg>
+<span class="h" style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em">MarketHub</span>
+</a>
+<form role="search" style="flex-grow: 1; display: flex; height: 46px; border: 2px solid #0B7A62; border-radius: 10px; overflow: hidden">
+<button type="button" style="border: none; background: #F6F7F9; color: #0F172A; padding: 0 14px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; border-right: 1px solid #E3E6EB">All <svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+<label for="q" style="position: absolute; left: -9999px">Search MarketHub</label>
+<input id="q" type="search" placeholder="Search products, suppliers and categories" style="flex-grow: 1; border: none; padding: 0 16px; font-size: 15px; font-family: inherit; color: #0F172A; outline: none">
+<button type="submit" aria-label="Search" style="border: none; background: #0B7A62; color: #FFFFFF; width: 56px; display: flex; align-items: center; justify-content: center"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></button>
+</form>
+<div role="group" aria-label="Currency" style="display: flex; padding: 3px; background: #F6F7F9; border: 1px solid #E3E6EB; border-radius: 999px">
+<sc-for list="{{ currencies }}" as="c" hint-placeholder-count="3">
+<button type="button" onClick="{{ c.pick }}" aria-pressed="{{ c.on }}" style="border: none; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; background: {{ c.bg }}; color: {{ c.fg }}">{{ c.code }}</button>
+</sc-for>
+</div>
+<div role="group" aria-label="Pricing mode" style="display: flex; padding: 3px; background: #F6F7F9; border: 1px solid #E3E6EB; border-radius: 999px">
+<button type="button" onClick="{{ setRetail }}" style="border: none; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; background: {{ retailBg }}; color: {{ retailFg }}">Retail</button>
+<button type="button" onClick="{{ setBusiness }}" style="border: none; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; background: {{ bizBg }}; color: {{ bizFg }}">Business</button>
+</div>
+<a href="#" style="display: flex; flex-direction: column; color: #0F172A; text-decoration: none; line-height: 1.2"><span style="font-size: 12px; color: #475569">Hello, sign in</span><span style="font-size: 14px; font-weight: 600">Account &amp; orders</span></a>
+<a href="#" aria-label="Wishlist, {{ favCount }} items" style="position: relative; color: #0F172A; display: flex; padding: 8px"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"></path></svg><span class="num" style="position: absolute; top: 0; right: -2px; min-width: 18px; height: 18px; border-radius: 9px; background: #C2410C; color: #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ favCount }}</span></a>
+<a href="#" aria-label="Cart, 3 items" style="position: relative; color: #0F172A; display: flex; align-items: center; gap: 6px; padding: 8px; text-decoration: none"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M2.5 3h2.4l2.5 12.2a2 2 0 0 0 2 1.6h8.3a2 2 0 0 0 2-1.5L21.5 7H6"></path></svg><span style="font-size: 14px; font-weight: 600">Cart</span><span class="num" style="position: absolute; top: 0; left: 22px; min-width: 18px; height: 18px; border-radius: 9px; background: #0B7A62; color: #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span></a>
+</div>
+<nav aria-label="Primary" style="height: 46px; display: flex; align-items: center; gap: 28px; padding: 0 32px; font-size: 14px; font-weight: 500; border-top: 1px solid #F0F2F5">
+<button type="button" style="border: none; background: none; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #0F172A; padding: 0"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>All categories</button>
+<a href="#" style="color: #C2410C; font-weight: 600">Today's Deals</a>
+<a href="#" style="color: #0F172A">Ready to Ship</a>
+<a href="#" style="color: #4338CA; font-weight: 600">Request a Quote</a>
+<a href="#" style="color: #0F172A">Top Suppliers</a>
+<a href="#" style="color: #0F172A">New Arrivals</a>
+<div style="flex-grow: 1"></div>
+<span style="display: flex; align-items: center; gap: 6px; color: #475569"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Deliver to <strong style="color: #0F172A">Accra, GH</strong></span>
+</nav>
+</header>
+
+<main style="flex-grow: 1; display: flex; flex-direction: column; gap: 48px; padding: 28px 32px 56px">
+
+<section aria-label="Featured" style="display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px">
+<div style="position: relative; height: 380px; border-radius: 16px; overflow: hidden; background: {{ slide.bg }}; display: flex; align-items: center; padding: 0 56px; gap: 40px">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 16px; max-width: 520px">
+<span style="align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: #FFFFFF; color: {{ slide.accent }}; font-size: 13px; font-weight: 700">{{ slide.eyebrow }}</span>
+<h1 class="h" style="margin: 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.02em; font-weight: 800">{{ slide.title }}</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #334155">{{ slide.body }}</p>
+<div style="display: flex; gap: 12px; margin-top: 8px">
+<a href="Product.dc.html" style="padding: 13px 22px; border-radius: 10px; background: {{ slide.accent }}; color: #FFFFFF; font-weight: 600; font-size: 15px; text-decoration: none">{{ slide.cta }}</a>
+<a href="#" style="padding: 13px 22px; border-radius: 10px; background: #FFFFFF; color: #0F172A; font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid #E3E6EB">Browse all</a>
+</div>
+</div>
+<div style="width: 400px; height: 300px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; flex-shrink: 0">
+<sc-for list="{{ slide.tiles }}" as="t" hint-placeholder-count="3">
+<div style="border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: {{ t.color }}; box-shadow: 0 8px 24px rgba(15,23,42,.06); grid-row: {{ t.row }}"><svg class="ic" width="72" height="72" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.25"><path d="{{ t.path }}"></path></svg></div>
+</sc-for>
+</div>
+<div style="position: absolute; left: 56px; bottom: 24px; display: flex; align-items: center; gap: 10px">
+<button type="button" onClick="{{ prevSlide }}" aria-label="Previous slide" style="width: 36px; height: 36px; border-radius: 18px; border: 1px solid #E3E6EB; background: #FFFFFF; color: #0F172A; display: flex; align-items: center; justify-content: center"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<sc-for list="{{ dots }}" as="d" hint-placeholder-count="3">
+<button type="button" onClick="{{ d.pick }}" aria-label="{{ d.label }}" style="width: {{ d.w }}; height: 8px; border-radius: 4px; border: none; padding: 0; background: {{ d.bg }}"></button>
+</sc-for>
+<button type="button" onClick="{{ nextSlide }}" aria-label="Next slide" style="width: 36px; height: 36px; border-radius: 18px; border: 1px solid #E3E6EB; background: #FFFFFF; color: #0F172A; display: flex; align-items: center; justify-content: center"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+</div>
+</div>
+<aside style="display: flex; flex-direction: column; gap: 16px">
+<div style="border: 1px solid #E3E6EB; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h" style="margin: 0; font-size: 18px; font-weight: 700">Welcome to MarketHub</h2>
+<p style="margin: 0; font-size: 14px; color: #475569; line-height: 1.5">Sign in for order tracking, saved addresses and price alerts.</p>
+<a href="#" style="padding: 11px; border-radius: 10px; background: #0B7A62; color: #FFFFFF; text-align: center; font-weight: 600; font-size: 14px; text-decoration: none">Sign in</a>
+<a href="#" style="font-size: 14px; text-align: center">New here? Create an account</a>
+</div>
+<div style="flex-grow: 1; border-radius: 16px; padding: 22px; background: #EEF0FF; display: flex; flex-direction: column; gap: 10px">
+<span style="display: flex; align-items: center; gap: 8px; color: #4338CA; font-size: 13px; font-weight: 700"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg>FOR BUSINESS</span>
+<h2 class="h" style="margin: 0; font-size: 18px; font-weight: 700; color: #1E1B4B">Buying in bulk?</h2>
+<p style="margin: 0; font-size: 14px; color: #3730A3; line-height: 1.5">Post one request and compare quotes from verified suppliers side by side.</p>
+<div style="flex-grow: 1"></div>
+<a href="#" style="padding: 11px; border-radius: 10px; background: #4338CA; color: #FFFFFF; text-align: center; font-weight: 600; font-size: 14px; text-decoration: none">Post a request for quote</a>
+</div>
+</aside>
+</section>
+
+<section aria-labelledby="cat-h" style="display: flex; flex-direction: column; gap: 18px">
+<h2 id="cat-h" class="h" style="margin: 0; font-size: 22px; font-weight: 700">Shop by category</h2>
+<div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{ categories }}" as="c" hint-placeholder-count="8">
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; color: #0F172A; text-decoration: none; font-size: 14px; font-weight: 500; text-align: center">
+<span style="width: 100%; height: 112px; border-radius: 14px; background: {{ c.bg }}; color: {{ c.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="44" height="44" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.5"><path d="{{ c.path }}"></path></svg></span>
+{{ c.name }}
+</a>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="deal-h" style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 14px">
+<h2 id="deal-h" class="h" style="margin: 0; font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: #C2410C"><svg class="icf" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg>Flash Deals</h2>
+<span class="num" style="padding: 5px 12px; border-radius: 999px; background: #FFF1EA; color: #9A3412; font-size: 14px; font-weight: 600">Ends in {{ countdown }}</span>
+<div style="flex-grow: 1"></div>
+<a href="#" style="font-size: 14px; font-weight: 600">See all deals</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{ deals }}" as="p" hint-placeholder-count="6">
+<a href="Product.dc.html" class="card" style="border: 1px solid #E3E6EB; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; color: #0F172A; text-decoration: none">
+<span style="position: relative; height: 180px; background: {{ p.bg }}; color: {{ p.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="64" height="64" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.25"><path d="{{ p.path }}"></path></svg><span style="position: absolute; top: 10px; left: 10px; padding: 3px 8px; border-radius: 6px; background: #C2410C; color: #FFFFFF; font-size: 12px; font-weight: 700">-{{ p.off }}%</span></span>
+<span style="padding: 12px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 14px; line-height: 1.35; height: 38px; overflow: hidden">{{ p.name }}</span>
+<span style="display: flex; align-items: baseline; gap: 8px"><span class="num" style="font-size: 18px; font-weight: 700; color: #C2410C">{{ p.priceTxt }}</span><span class="num" style="font-size: 13px; color: #475569; text-decoration: line-through">{{ p.wasTxt }}</span></span>
+<span style="height: 6px; border-radius: 3px; background: #F1F3F6; overflow: hidden"><span style="display: block; height: 6px; width: {{ p.claimW }}; background: #C2410C"></span></span>
+<span style="font-size: 12px; color: #475569">{{ p.claimed }}% claimed</span>
+</span>
+</a>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="rec-h" style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 14px">
+<h2 id="rec-h" class="h" style="margin: 0; font-size: 22px; font-weight: 700">Recommended for you</h2>
+<sc-if value="{{ isBiz }}" hint-placeholder-val="{{ false }}"><span style="padding: 4px 10px; border-radius: 999px; background: #EEF0FF; color: #4338CA; font-size: 13px; font-weight: 600">Showing business prices</span></sc-if>
+<div style="flex-grow: 1"></div>
+<a href="#" style="font-size: 14px; font-weight: 600">See more</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{ recs }}" as="p" hint-placeholder-count="6">
+<div class="card" style="position: relative; border: 1px solid #E3E6EB; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column">
+<a href="Product.dc.html" aria-label="{{ p.name }}" style="height: 200px; background: {{ p.bg }}; color: {{ p.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="68" height="68" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.25"><path d="{{ p.path }}"></path></svg></a>
+<button type="button" onClick="{{ p.toggleFav }}" aria-label="{{ p.favLabel }}" aria-pressed="{{ p.fav }}" style="position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 18px; border: none; background: #FFFFFF; color: {{ p.heartColor }}; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(15,23,42,.12)"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: {{ p.heartFill }}; stroke: currentColor; stroke-width: 2; stroke-linejoin: round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"></path></svg></button>
+<div style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px">
+<a href="Product.dc.html" style="font-size: 14px; line-height: 1.35; height: 38px; overflow: hidden; color: #0F172A">{{ p.name }}</a>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px"><span style="position: relative; width: 76px; height: 14px; display: inline-block"><svg width="76" height="14" viewBox="0 0 100 18" aria-hidden="true" style="position: absolute; left: 0; top: 0; fill: #E3E6EB"><path d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(20 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(40 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(60 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(80 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path></svg><span style="position: absolute; left: 0; top: 0; height: 14px; width: {{ p.starW }}; overflow: hidden"><svg width="76" height="14" viewBox="0 0 100 18" aria-hidden="true" style="fill: #D97706"><path d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(20 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(40 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(60 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(80 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path></svg></span></span><span class="num" style="color: #475569">{{ p.rating }} ({{ p.reviews }})</span></span>
+<sc-if value="{{ p.retail }}" hint-placeholder-val="{{ true }}"><span style="display: flex; align-items: baseline; gap: 8px"><span class="num" style="font-size: 19px; font-weight: 700">{{ p.priceTxt }}</span><span class="num" style="font-size: 12px; color: #475569">{{ p.sold }} sold</span></span></sc-if>
+<sc-if value="{{ p.biz }}" hint-placeholder-val="{{ false }}"><span style="display: flex; flex-direction: column; gap: 2px"><span class="num" style="font-size: 17px; font-weight: 700; color: #4338CA">{{ p.bizTxt }}<span style="font-size: 12px; font-weight: 500"> /unit</span></span><span style="font-size: 12px; color: #475569">MOQ {{ p.moq }} · {{ p.lead }}-day lead time</span></span></sc-if>
+<span style="font-size: 12px; color: #475569; display: flex; align-items: center; gap: 4px">{{ p.seller }}<sc-if value="{{ p.verified }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" aria-label="Verified supplier" role="img" style="fill: #0B7A62"><path d="M12 2 9.5 4.2 6.2 4l-.8 3.2L2.6 9l1.3 3-1.3 3 2.8 1.8.8 3.2 3.3-.2L12 22l2.5-2.2 3.3.2.8-3.2 2.8-1.8-1.3-3 1.3-3-2.8-1.8-.8-3.2-3.3.2zm-1.2 13.6-3.6-3.6 1.4-1.4 2.2 2.2 5-5 1.4 1.4z"></path></svg></sc-if></span>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="bulk-h" style="display: flex; flex-direction: column; gap: 18px; padding: 28px; border-radius: 18px; background: #F5F6FF">
+<div style="display: flex; align-items: center; gap: 14px">
+<h2 id="bulk-h" class="h" style="margin: 0; font-size: 22px; font-weight: 700; color: #1E1B4B">Ready to Ship · Bulk pricing</h2>
+<span style="font-size: 14px; color: #3730A3">Low MOQs, tiered prices, samples available</span>
+<div style="flex-grow: 1"></div>
+<a href="#" style="font-size: 14px; font-weight: 600; color: #4338CA">View all suppliers</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{ bulk }}" as="b" hint-placeholder-count="4">
+<a href="Product.dc.html" class="card" style="border: 1px solid #DADDF7; border-radius: 14px; background: #FFFFFF; padding: 14px; display: flex; gap: 14px; color: #0F172A; text-decoration: none">
+<span style="width: 110px; height: 132px; flex-shrink: 0; border-radius: 10px; background: {{ b.bg }}; color: {{ b.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="48" height="48" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.4"><path d="{{ b.path }}"></path></svg></span>
+<span style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="font-size: 14px; font-weight: 500; line-height: 1.35">{{ b.name }}</span>
+<span style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin-top: 2px">
+<sc-for list="{{ b.tiers }}" as="t" hint-placeholder-count="3">
+<span style="display: flex; flex-direction: column; padding: 5px 6px; border-radius: 6px; background: #F5F6FF"><span class="num" style="font-size: 13px; font-weight: 700; color: #4338CA">{{ t.price }}</span><span style="font-size: 11px; color: #475569">{{ t.range }}</span></span>
+</sc-for>
+</span>
+<span style="font-size: 12px; color: #475569">MOQ {{ b.moq }} · Ships in {{ b.lead }} days</span>
+<span style="font-size: 12px; font-weight: 600; color: #4338CA">Sample {{ b.sampleTxt }}</span>
+</span>
+</a>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="sel-h" style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center"><h2 id="sel-h" class="h" style="margin: 0; font-size: 22px; font-weight: 700">Top-rated sellers</h2><div style="flex-grow: 1"></div><a href="#" style="font-size: 14px; font-weight: 600">All sellers</a></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{ sellers }}" as="s" hint-placeholder-count="4">
+<div style="border: 1px solid #E3E6EB; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h" style="width: 48px; height: 48px; border-radius: 12px; background: {{ s.bg }}; color: {{ s.fg }}; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17px">{{ s.initials }}</span>
+<span style="display: flex; flex-direction: column"><span style="font-weight: 600; font-size: 15px">{{ s.name }}</span><span style="font-size: 13px; color: #475569">{{ s.place }}</span></span>
+</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<span style="padding: 3px 8px; border-radius: 6px; background: #E7F5F1; color: #075C49; font-size: 12px; font-weight: 600">Verified</span>
+<sc-if value="{{ s.star }}" hint-placeholder-val="{{ true }}"><span style="padding: 3px 8px; border-radius: 6px; background: #FEF3C7; color: #92400E; font-size: 12px; font-weight: 600">Star Seller</span></sc-if>
+<span style="padding: 3px 8px; border-radius: 6px; background: #F1F3F6; color: #334155; font-size: 12px; font-weight: 500">{{ s.years }} yrs</span>
+</div>
+<div class="num" style="display: flex; justify-content: space-between; font-size: 13px; color: #475569"><span><strong style="color: #0F172A">{{ s.rating }}</strong> rating</span><span><strong style="color: #0F172A">{{ s.resp }}</strong> response</span><span><strong style="color: #0F172A">{{ s.items }}</strong> items</span></div>
+<a href="#" style="padding: 9px; border-radius: 10px; border: 1px solid #E3E6EB; text-align: center; font-size: 14px; font-weight: 600; color: #0F172A; text-decoration: none">Visit store</a>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section aria-label="Why shop with us" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; padding: 22px 24px; border-radius: 16px; background: #F6F7F9">
+<sc-for list="{{ trust }}" as="t" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 42px; height: 42px; flex-shrink: 0; border-radius: 21px; background: #FFFFFF; color: #0B7A62; display: flex; align-items: center; justify-content: center"><svg class="ic" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ t.path }}"></path></svg></span><span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">{{ t.title }}</span><span style="font-size: 12px; color: #475569">{{ t.sub }}</span></span></div>
+</sc-for>
+</section>
+</main>
+
+<footer style="flex-shrink: 0; background: #0F172A; color: #CBD5E1; padding: 44px 32px 28px; display: flex; flex-direction: column; gap: 32px; font-size: 14px">
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="h" style="color: #FFFFFF; font-size: 20px; font-weight: 800">MarketHub</span><span style="line-height: 1.5">Retail and wholesale from verified sellers in Africa and worldwide.</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><strong style="color: #FFFFFF">Shop</strong><a href="#" style="color: #CBD5E1">Today's Deals</a><a href="#" style="color: #CBD5E1">Ready to Ship</a><a href="#" style="color: #CBD5E1">Gift ideas</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><strong style="color: #FFFFFF">Business</strong><a href="#" style="color: #CBD5E1">Request a quote</a><a href="#" style="color: #CBD5E1">Business account</a><a href="#" style="color: #CBD5E1">Order samples</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><strong style="color: #FFFFFF">Sell</strong><a href="#" style="color: #CBD5E1">Become a seller</a><a href="#" style="color: #CBD5E1">Seller Centre</a><a href="#" style="color: #CBD5E1">Seller policies</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><strong style="color: #FFFFFF">Help</strong><a href="#" style="color: #CBD5E1">Track an order</a><a href="#" style="color: #CBD5E1">Returns &amp; refunds</a><a href="#" style="color: #CBD5E1">Pickup stations</a></div>
+</div>
+<div style="display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid #1F2A44; font-size: 13px; color: #94A3B8"><span>© 2026 MarketHub · Demo project</span><span>Privacy · Terms · Cookie settings</span></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2800}}'>
+var P = {
+  phone: 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z M11 18h2',
+  shirt: 'M20.4 6.6 16 4a4 4 0 0 1-8 0L3.6 6.6a1 1 0 0 0-.5 1.2l1.2 3.6a1 1 0 0 0 1.3.6L7 11v9a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-9l1.4.9a1 1 0 0 0 1.3-.6l1.2-3.6a1 1 0 0 0-.5-1.2z',
+  home: 'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+  drop: 'M12 2.7s-6 6.3-6 10.8a6 6 0 0 0 12 0C18 9 12 2.7 12 2.7z',
+  dumbbell: 'M6 7v10 M18 7v10 M3 9v6 M21 9v6 M6 12h12',
+  wrench: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9l-3.8 3.8z',
+  basket: 'M5 11h14l-1.5 9h-11z M9 11V7a3 3 0 0 1 6 0v4',
+  gift: 'M3 8h18v4H3z M5 12v9h14v-9 M12 8v13 M12 8S10.5 3 8 3.5 7 7 12 8z M12 8s1.5-5 4-4.5S17 7 12 8z',
+  battery: 'M4 7h13a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z M22 11v2 M10 9l-2 3h4l-2 3',
+  headphones: 'M3 14v-2a9 9 0 0 1 18 0v2 M3 14h3v6H4a1 1 0 0 1-1-1z M21 14h-3v6h2a1 1 0 0 0 1-1z',
+  watch: 'M8 6h8v12H8z M9 6l1-4h4l1 4 M9 18l1 4h4l1-4 M12 10v2l1 1',
+  lamp: 'M8 2h8l3 8H5z M12 10v10 M8 22h8',
+  bag: 'M5 8h14l-1 13H6z M9 8V6a3 3 0 0 1 6 0v2',
+  pan: 'M3 12a7 7 0 0 0 14 0z M17 12h5 M7 5c0-1 1-1 1-2 M11 5c0-1 1-1 1-2',
+  chair: 'M6 3h12v8H6z M5 11h14v3H5z M7 14v7 M17 14v7',
+  shoe: 'M3 17V9l4 1 3 3 7 1a4 4 0 0 1 4 3z M3 20h18',
+  shield: 'M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z M9 12l2 2 4-4',
+  pin: 'M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z M12 7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5',
+  mobile: 'M7 2h10v20H7z M4 8h3 M4 12h3',
+  card: 'M3 6h18v12H3z M3 10h18 M7 15h3',
+  undo: 'M9 14 4 9l5-5 M4 9h10a6 6 0 0 1 0 12h-2'
+};
+var TINT = {
+  teal: ['#E7F5F1', '#0B7A62'], coral: ['#FFF1EA', '#C2410C'], indigo: ['#EEF0FF', '#4338CA'],
+  amber: ['#FEF6E4', '#B45309'], slate: ['#F1F3F6', '#334155'], rose: ['#FDEEF1', '#BE185D'],
+  sky: ['#E8F3FB', '#0369A1'], olive: ['#F1F5E6', '#4D7C0F']
+};
+var RATES = { GHS: 1, USD: 1 / 15.2, NGN: 104 };
+function fmt(ghs, cur) {
+  var v = ghs * RATES[cur];
+  if (cur === 'NGN') return '₦' + Math.round(v).toLocaleString('en-US');
+  if (cur === 'USD') return '$' + v.toFixed(2);
+  return 'GHS ' + v.toFixed(2);
+}
+var SLIDES = [
+  { eyebrow: 'Back to school', title: 'Tech deals for the new term', body: 'Laptops, power banks and headphones from verified sellers, with pickup-station delivery across Ghana and Nigeria.', cta: 'Shop tech deals', bg: '#E7F5F1', accent: '#0B7A62', tiles: [['phone', 'teal', '1 / 3'], ['headphones', 'indigo', 'auto'], ['battery', 'coral', 'auto']] },
+  { eyebrow: 'For business', title: 'Source in bulk, pay less per unit', body: 'Tiered pricing, low MOQs and samples from suppliers who ship in days. Compare quotes side by side.', cta: 'Explore bulk deals', bg: '#EEF0FF', accent: '#4338CA', tiles: [['wrench', 'indigo', '1 / 3'], ['bag', 'teal', 'auto'], ['chair', 'amber', 'auto']] },
+  { eyebrow: 'Home refresh', title: 'Kitchen and living, under GHS 300', body: 'Cookware, lighting and décor with free pickup-station delivery on orders over GHS 250.', cta: 'Shop home', bg: '#FEF6E4', accent: '#B45309', tiles: [['pan', 'coral', '1 / 3'], ['lamp', 'amber', 'auto'], ['home', 'teal', 'auto']] }
+];
+var CATS = [['Electronics', 'phone', 'teal'], ['Fashion', 'shirt', 'rose'], ['Home & Kitchen', 'home', 'amber'], ['Beauty', 'drop', 'coral'], ['Sports', 'dumbbell', 'sky'], ['Industrial & Tools', 'wrench', 'slate'], ['Groceries', 'basket', 'olive'], ['Toys & Gifts', 'gift', 'indigo']];
+var DEALS = [
+  ['20,000mAh power bank, 22.5W fast charge', 'battery', 'teal', 249, 299, 62],
+  ['Wireless over-ear headphones, ANC', 'headphones', 'indigo', 489, 650, 48],
+  ['Non-stick frying pan set, 3 pieces', 'pan', 'amber', 179, 240, 71],
+  ['Running shoes, breathable mesh', 'shoe', 'coral', 320, 420, 35],
+  ['Smart watch, heart-rate + GPS', 'watch', 'slate', 610, 799, 54],
+  ['LED desk lamp, 3 colour modes', 'lamp', 'sky', 115, 150, 80]
+];
+var RECS = [
+  ['r1', 'Ergonomic office chair with lumbar support', 'chair', 'slate', 1150, 4.5, 318, '2.1k', 'Kumasi Furnish', true, 5, 7, 980],
+  ['r2', 'Canvas tote bag, 12oz, custom print ready', 'bag', 'olive', 89, 4.7, 1204, '8.9k', 'StyleCo Lagos', true, 50, 5, 58],
+  ['r3', 'Shea butter body lotion, 400ml', 'drop', 'amber', 65, 4.8, 2410, '15k', 'Nkulenu Naturals', true, 24, 3, 44],
+  ['r4', 'Bluetooth speaker, waterproof IPX7', 'headphones', 'teal', 399, 4.4, 640, '3.2k', 'VoltHub', true, 10, 7, 330],
+  ['r5', 'Cordless drill driver, 20V, 2 batteries', 'wrench', 'indigo', 890, 4.6, 205, '740', 'ToolPro Tema', false, 5, 10, 760],
+  ['r6', 'Kids building blocks, 500 pieces', 'gift', 'rose', 210, 4.9, 512, '1.8k', 'PlayNest', true, 20, 6, 160]
+];
+var BULK = [
+  ['Custom logo cotton T-shirts, 180gsm', 'shirt', 'rose', [[42, '50–199'], [36, '200–999'], [31, '1,000+']], 50, 7, 60],
+  ['USB-C fast-charge cables, 1m, braided', 'battery', 'teal', [[14, '100–499'], [11, '500–1,999'], [9, '2,000+']], 100, 5, 25],
+  ['Stainless steel water bottles, 750ml', 'drop', 'sky', [[38, '30–99'], [33, '100–499'], [28, '500+']], 30, 6, 55],
+  ['Kraft paper shopping bags, printed', 'bag', 'amber', [[2.4, '500–1,999'], [1.9, '2,000+'], [1.5, '10,000+']], 500, 12, 0]
+];
+var SELLERS = [
+  ['VoltHub', 'VH', 'Accra, Ghana', 'teal', true, 5, '4.8', '98%', '412'],
+  ['StyleCo Lagos', 'SC', 'Lagos, Nigeria', 'rose', true, 3, '4.7', '95%', '1,086'],
+  ['Shenzhen Brightline', 'SB', 'Shenzhen, China', 'indigo', false, 9, '4.6', '92%', '2,340'],
+  ['Nkulenu Naturals', 'NN', 'Kumasi, Ghana', 'amber', true, 4, '4.9', '99%', '138']
+];
+var TRUST = [
+  ['shield', 'Protected orders', 'Refund if it doesn’t arrive as described'],
+  ['pin', 'Pickup stations', 'Collect near you, pay less'],
+  ['mobile', 'Mobile money', 'MTN, Telecel and AirtelTigo'],
+  ['card', 'Cards worldwide', 'Visa, Mastercard, Amex'],
+  ['undo', 'Easy returns', 'Within the seller’s window']
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cur: 'GHS', biz: false, slide: 0, secs: 4 * 3600 + 12 * 60 + 33, favs: { r2: true } };
+  }
+  componentDidMount() {
+    this.timer = setInterval(() => this.setState({ secs: this.state.secs > 0 ? this.state.secs - 1 : 0 }), 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    var s = this.state, cur = s.cur, self = this;
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var sl = SLIDES[s.slide];
+    var favCount = Object.keys(s.favs).filter(function (k) { return s.favs[k]; }).length;
+    return {
+      countdown: pad(Math.floor(s.secs / 3600)) + ':' + pad(Math.floor(s.secs % 3600 / 60)) + ':' + pad(s.secs % 60),
+      favCount: favCount,
+      isBiz: s.biz,
+      currencies: ['GHS', 'USD', 'NGN'].map(function (c) {
+        return { code: c, on: c === cur, bg: c === cur ? '#0F172A' : 'transparent', fg: c === cur ? '#FFFFFF' : '#475569', pick: function () { self.setState({ cur: c }); } };
+      }),
+      retailBg: s.biz ? 'transparent' : '#0B7A62', retailFg: s.biz ? '#475569' : '#FFFFFF',
+      bizBg: s.biz ? '#4338CA' : 'transparent', bizFg: s.biz ? '#FFFFFF' : '#475569',
+      setRetail: function () { self.setState({ biz: false }); },
+      setBusiness: function () { self.setState({ biz: true }); },
+      slide: {
+        eyebrow: sl.eyebrow, title: sl.title, body: sl.body, cta: sl.cta, bg: sl.bg, accent: sl.accent,
+        tiles: sl.tiles.map(function (t) { return { path: P[t[0]], color: TINT[t[1]][1], row: t[2] }; })
+      },
+      dots: SLIDES.map(function (x, i) {
+        return { label: 'Show slide ' + (i + 1), w: i === s.slide ? '28px' : '8px', bg: i === s.slide ? '#0F172A' : '#94A3B8', pick: function () { self.setState({ slide: i }); } };
+      }),
+      prevSlide: function () { self.setState({ slide: (s.slide + SLIDES.length - 1) % SLIDES.length }); },
+      nextSlide: function () { self.setState({ slide: (s.slide + 1) % SLIDES.length }); },
+      categories: CATS.map(function (c) { return { name: c[0], path: P[c[1]], bg: TINT[c[2]][0], fg: TINT[c[2]][1] }; }),
+      deals: DEALS.map(function (d) {
+        return { name: d[0], path: P[d[1]], bg: TINT[d[2]][0], fg: TINT[d[2]][1], priceTxt: fmt(d[3], cur), wasTxt: fmt(d[4], cur), off: Math.round((1 - d[3] / d[4]) * 100), claimed: d[5], claimW: d[5] + '%' };
+      }),
+      recs: RECS.map(function (r) {
+        var fav = !!s.favs[r[0]];
+        return {
+          name: r[1], path: P[r[2]], bg: TINT[r[3]][0], fg: TINT[r[3]][1], priceTxt: fmt(r[4], cur), rating: r[5].toFixed(1), reviews: r[6].toLocaleString('en-US'), starW: (r[5] / 5 * 100) + '%',
+          sold: r[7], seller: r[8], verified: r[9], moq: r[10], lead: r[11], bizTxt: fmt(r[12], cur), retail: !s.biz, biz: s.biz,
+          fav: fav, favLabel: fav ? 'Remove from wishlist' : 'Save to wishlist', heartColor: fav ? '#C2410C' : '#475569', heartFill: fav ? '#C2410C' : 'none',
+          toggleFav: function () { var f = Object.assign({}, s.favs); f[r[0]] = !fav; self.setState({ favs: f }); }
+        };
+      }),
+      bulk: BULK.map(function (b) {
+        return { name: b[0], path: P[b[1]], bg: TINT[b[2]][0], fg: TINT[b[2]][1], tiers: b[3].map(function (t) { return { price: fmt(t[0], cur), range: t[1] }; }), moq: b[4], lead: b[5], sampleTxt: b[6] === 0 ? 'free' : fmt(b[6], cur) };
+      }),
+      sellers: SELLERS.map(function (x) { return { name: x[0], initials: x[1], place: x[2], bg: TINT[x[3]][0], fg: TINT[x[3]][1], star: x[4], years: x[5], rating: x[6], resp: x[7], items: x[8] }; }),
+      trust: TRUST.map(function (t) { return { path: P[t[0]], title: t[1], sub: t[2] }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MarketHub — Product (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:#0F172A;background:#FFFFFF}
+a{color:#0B7A62;text-decoration:none}
+.ic{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #0B7A62;outline-offset:2px}
+.h{font-family:'Plus Jakarta Sans',Inter,sans-serif}
+.num{font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; display: flex; flex-direction: column; background: #FFFFFF; overflow: hidden; position: relative">
+
+<header style="flex-shrink: 0; padding: 10px 16px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid #E3E6EB">
+<div style="display: flex; align-items: center; gap: 12px">
+<a href="Main.dc.html" aria-label="Back" style="color: #0F172A; display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; margin-left: -12px"><svg class="ic" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></a>
+<div style="flex-grow: 1; height: 40px; border-radius: 10px; background: #F6F7F9; border: 1px solid #E3E6EB; display: flex; align-items: center; gap: 8px; padding: 0 12px; font-size: 14px; color: #475569"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>power bank</div>
+<a href="#" aria-label="Cart, {{ cart }} items" style="position: relative; color: #0F172A; display: flex; width: 44px; height: 44px; align-items: center; justify-content: center"><svg class="ic" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M2.5 3h2.4l2.5 12.2a2 2 0 0 0 2 1.6h8.3a2 2 0 0 0 2-1.5L21.5 7H6"></path></svg><span class="num" style="position: absolute; top: 4px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #0B7A62; color: #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ cart }}</span></a>
+</div>
+</header>
+
+<div style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column">
+<div style="position: relative; height: 330px; flex-shrink: 0; background: #E7F5F1; color: #0B7A62; display: flex; align-items: center; justify-content: center">
+<svg class="ic" width="150" height="150" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 0.9"><path d="M4 7h13a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z M22 11v2 M10 9l-2 3h4l-2 3"></path></svg>
+<span style="position: absolute; left: 12px; top: 12px; padding: 3px 8px; border-radius: 6px; background: #C2410C; color: #FFFFFF; font-size: 12px; font-weight: 700">−17%</span>
+<span class="num" style="position: absolute; right: 12px; bottom: 12px; padding: 3px 10px; border-radius: 999px; background: rgba(15,23,42,.75); color: #FFFFFF; font-size: 12px">1 / 5</span>
+</div>
+
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<a href="#" style="font-size: 13px; font-weight: 600">VoltHub · Verified · Star Seller</a>
+<h1 class="h" style="margin: 0; font-size: 19px; line-height: 1.3; font-weight: 700">VoltCell {{ capName }} power bank, 22.5W PD fast charge</h1>
+<span class="num" style="font-size: 13px; color: #475569"><strong style="color: #B45309">★ 4.6</strong> · 812 ratings · 3.4k sold</span>
+</div>
+
+<div style="display: flex; align-items: baseline; gap: 10px"><span class="num h" style="font-size: 28px; font-weight: 800">{{ priceTxt }}</span><span class="num" style="font-size: 14px; color: #475569; text-decoration: line-through">{{ wasTxt }}</span></div>
+<span class="num" style="font-size: 13px; font-weight: 600; color: #9A3412">Flash deal ends in 04:12:33</span>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 14px"><strong>Capacity:</strong> {{ capName }}</span>
+<div role="radiogroup" aria-label="Capacity" style="display: flex; gap: 8px">
+<sc-for list="{{ caps }}" as="c" hint-placeholder-count="3">
+<button type="button" role="radio" aria-checked="{{ c.on }}" onClick="{{ c.pick }}" style="flex-grow: 1; min-height: 44px; padding: 8px 6px; border-radius: 10px; border: 2px solid {{ c.ring }}; background: {{ c.bg }}; font-size: 13px; font-weight: 600; color: #0F172A">{{ c.name }}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="border: 1px solid #DADDF7; border-radius: 12px; overflow: hidden">
+<div style="padding: 10px 12px; background: #F5F6FF; font-size: 13px; color: #1E1B4B"><strong>Business pricing</strong> · MOQ 10</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))">
+<sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3">
+<div style="padding: 10px 12px; display: flex; flex-direction: column; gap: 2px"><span class="num" style="font-size: 15px; font-weight: 700; color: #4338CA">{{ t.p }}</span><span style="font-size: 12px; color: #475569">{{ t.r }}</span></div>
+</sc-for>
+</div>
+<div style="padding: 10px 12px; border-top: 1px solid #E3E6EB; display: flex; gap: 8px"><a href="#" style="flex-grow: 1; min-height: 40px; border-radius: 10px; border: 1px solid #4338CA; color: #4338CA; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">Order sample</a><a href="#" style="flex-grow: 1; min-height: 40px; border-radius: 10px; background: #4338CA; color: #FFFFFF; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">Request quote</a></div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 12px; background: #F6F7F9; font-size: 14px">
+<span style="display: flex; gap: 10px"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; color: #0B7A62"><path d="M3 7h11v9H3z M14 10h4l3 3v3h-7z M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z M17 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg><span><strong>Doorstep</strong> · arrives Tue 30 Sep · GHS 25</span></span>
+<span style="display: flex; gap: 10px"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; color: #0B7A62"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z M12 7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5"></path></svg><span><strong>Pickup station</strong> · ready Mon 29 Sep · GHS 10</span></span>
+<span style="display: flex; gap: 10px"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="flex-shrink: 0; color: #0B7A62"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z M9 12l2 2 4-4"></path></svg><span><strong>Protected order</strong> · MoMo, card or pay on delivery</span></span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 class="h" style="margin: 0; font-size: 17px; font-weight: 700">Customer reviews</h2>
+<div style="padding: 12px 14px; border-radius: 12px; border: 1px solid #E3E6EB; font-size: 14px; line-height: 1.55"><strong>Customers say:</strong> fast charging and an accurate display; lasts two to three phone charges. Some find it heavy.</div>
+<article style="display: flex; flex-direction: column; gap: 6px; padding: 12px 0; border-bottom: 1px solid #E3E6EB"><span style="font-size: 13px"><strong>Kofi A.</strong> <span style="color: #15803D; font-weight: 600">Verified purchase</span></span><span style="font-size: 14px; font-weight: 600"><span style="color: #B45309">★ 5</span> Charges my phone four times</span><p style="margin: 0; font-size: 14px; line-height: 1.55; color: #1E293B">Used it through two days of power cuts and it still had charge left.</p></article>
+<a href="#" style="font-size: 14px; font-weight: 600">See all 812 reviews</a>
+</div>
+<div style="height: 84px; flex-shrink: 0"></div>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px 18px; background: #FFFFFF; border-top: 1px solid #E3E6EB; display: flex; gap: 10px; box-shadow: 0 -4px 16px rgba(15,23,42,.06)">
+<button type="button" onClick="{{ toggleFav }}" aria-label="{{ favLabel }}" aria-pressed="{{ fav }}" style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; border: 1px solid #CBD2DC; background: #FFFFFF; color: {{ favColor }}; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: {{ favFill }}; stroke: currentColor; stroke-width: 2; stroke-linejoin: round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"></path></svg></button>
+<button type="button" onClick="{{ add }}" style="flex-grow: 1; height: 48px; border: none; border-radius: 12px; background: #0B7A62; color: #FFFFFF; font-size: 15px; font-weight: 700">{{ addLabel }}</button>
+<button type="button" style="flex-grow: 1; height: 48px; border: none; border-radius: 12px; background: #0F172A; color: #FFFFFF; font-size: 15px; font-weight: 700">Buy now</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+var CAPS = [['10,000mAh', 179, 215], ['20,000mAh', 249, 299], ['30,000mAh', 329, 389]];
+var TIERS = [[0.864, '10–99'], [0.795, '100–499'], [0.731, '500+']];
+function fmt(v) { return 'GHS ' + v.toFixed(2); }
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { cap: 1, fav: false, cart: 3, added: false }; }
+  renderVals() {
+    var s = this.state, self = this, base = CAPS[s.cap][1];
+    return {
+      cart: s.cart,
+      capName: CAPS[s.cap][0], priceTxt: fmt(base), wasTxt: fmt(CAPS[s.cap][2]),
+      caps: CAPS.map(function (c, i) { return { name: c[0], on: i === s.cap, ring: i === s.cap ? '#0B7A62' : '#E3E6EB', bg: i === s.cap ? '#F3FBF8' : '#FFFFFF', pick: function () { self.setState({ cap: i }); } }; }),
+      tiers: TIERS.map(function (t) { return { p: fmt(Math.round(base * t[0] * 100) / 100), r: t[1] + ' units' }; }),
+      fav: s.fav, favLabel: s.fav ? 'Remove from wishlist' : 'Save to wishlist', favColor: s.fav ? '#C2410C' : '#0F172A', favFill: s.fav ? '#C2410C' : 'none',
+      toggleFav: function () { self.setState({ fav: !s.fav }); },
+      addLabel: s.added ? 'Added ✓' : 'Add to cart',
+      add: function () { self.setState({ cart: s.cart + 1, added: true }); setTimeout(function () { self.setState({ added: false }); }, 1800); }
+    };
+  }
+}
+</script>
+</body>
+</html>

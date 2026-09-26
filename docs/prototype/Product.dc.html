@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MarketHub — Product detail</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:#0F172A;background:#FFFFFF}
+a{color:#0B7A62;text-decoration:none}a:hover{color:#075C49;text-decoration:underline}
+.ic{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.icf{fill:currentColor;stroke:none}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #0B7A62;outline-offset:2px}
+.h{font-family:'Plus Jakarta Sans',Inter,sans-serif}
+.num{font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+<div style="width: 1440px; height: 2760px; display: flex; flex-direction: column; background: #FFFFFF; overflow: hidden">
+
+<div style="height: 36px; flex-shrink: 0; background: #0F172A; color: #E6EAF2; font-size: 13px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px">
+<div style="display: flex; align-items: center; gap: 8px"><span style="padding: 2px 8px; border-radius: 999px; background: #1F2A44; color: #34D3A6; font-weight: 600; font-size: 12px">Demo</span><span>Payments run in test mode. No real money moves.</span></div>
+<div style="display: flex; gap: 24px"><a href="#" style="color: #E6EAF2">Sell on MarketHub</a><a href="#" style="color: #E6EAF2">Track an order</a><a href="#" style="color: #E6EAF2">Help centre</a></div>
+</div>
+
+<header style="flex-shrink: 0; border-bottom: 1px solid #E3E6EB">
+<div style="height: 76px; display: flex; align-items: center; gap: 24px; padding: 0 32px">
+<a href="Main.dc.html" aria-label="MarketHub home" style="display: flex; align-items: center; gap: 10px; color: #0F172A; text-decoration: none">
+<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#0B7A62"></rect><path d="M9 23V12l8 6 8-6v11" style="fill: none; stroke: #FFFFFF; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round"></path></svg>
+<span class="h" style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em">MarketHub</span>
+</a>
+<form role="search" style="flex-grow: 1; display: flex; height: 46px; border: 2px solid #0B7A62; border-radius: 10px; overflow: hidden">
+<button type="button" style="border: none; background: #F6F7F9; color: #0F172A; padding: 0 14px; font-size: 14px; font-weight: 500; border-right: 1px solid #E3E6EB">Electronics</button>
+<label for="q2" style="position: absolute; left: -9999px">Search MarketHub</label>
+<input id="q2" type="search" value="power bank" style="flex-grow: 1; border: none; padding: 0 16px; font-size: 15px; font-family: inherit; color: #0F172A; outline: none">
+<button type="submit" aria-label="Search" style="border: none; background: #0B7A62; color: #FFFFFF; width: 56px; display: flex; align-items: center; justify-content: center"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></button>
+</form>
+<div role="group" aria-label="Currency" style="display: flex; padding: 3px; background: #F6F7F9; border: 1px solid #E3E6EB; border-radius: 999px">
+<sc-for list="{{ currencies }}" as="c" hint-placeholder-count="3">
+<button type="button" onClick="{{ c.pick }}" aria-pressed="{{ c.on }}" style="border: none; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; background: {{ c.bg }}; color: {{ c.fg }}">{{ c.code }}</button>
+</sc-for>
+</div>
+<div role="group" aria-label="Pricing mode" style="display: flex; padding: 3px; background: #F6F7F9; border: 1px solid #E3E6EB; border-radius: 999px">
+<button type="button" onClick="{{ setRetail }}" style="border: none; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; background: {{ retailBg }}; color: {{ retailFg }}">Retail</button>
+<button type="button" onClick="{{ setBusiness }}" style="border: none; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; background: {{ bizBg }}; color: {{ bizFg }}">Business</button>
+</div>
+<a href="#" style="display: flex; flex-direction: column; color: #0F172A; text-decoration: none; line-height: 1.2"><span style="font-size: 12px; color: #475569">Hello, Ama</span><span style="font-size: 14px; font-weight: 600">Account &amp; orders</span></a>
+<a href="#" aria-label="Cart, {{ cartCount }} items" style="position: relative; color: #0F172A; display: flex; align-items: center; gap: 6px; padding: 8px; text-decoration: none"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M2.5 3h2.4l2.5 12.2a2 2 0 0 0 2 1.6h8.3a2 2 0 0 0 2-1.5L21.5 7H6"></path></svg><span style="font-size: 14px; font-weight: 600">Cart</span><span class="num" style="position: absolute; top: 0; left: 22px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #0B7A62; color: #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ cartCount }}</span></a>
+</div>
+</header>
+
+<main style="flex-grow: 1; display: flex; flex-direction: column; gap: 44px; padding: 18px 32px 48px">
+<nav aria-label="Breadcrumb" style="font-size: 13px; color: #475569; display: flex; gap: 8px"><a href="Main.dc.html">Home</a><span aria-hidden="true">›</span><a href="#">Electronics</a><span aria-hidden="true">›</span><a href="#">Phone accessories</a><span aria-hidden="true">›</span><span style="color: #0F172A">Power banks</span></nav>
+
+<section style="display: grid; grid-template-columns: 540px minmax(0, 1fr) 340px; gap: 32px; align-items: start">
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="position: relative; height: 540px; border-radius: 16px; background: {{ view.bg }}; color: {{ view.fg }}; display: flex; align-items: center; justify-content: center">
+<svg class="ic" width="220" height="220" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 0.9"><path d="M4 7h13a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z M22 11v2 M10 9l-2 3h4l-2 3"></path></svg>
+<span style="position: absolute; left: 16px; top: 16px; padding: 4px 10px; border-radius: 6px; background: #C2410C; color: #FFFFFF; font-size: 13px; font-weight: 700">Flash deal −17%</span>
+<span style="position: absolute; left: 16px; bottom: 16px; padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,.9); font-size: 12px; color: #334155">{{ view.label }} · {{ colorName }} · photo placeholder</span>
+<span style="position: absolute; right: 16px; bottom: 16px; padding: 6px; border-radius: 8px; background: #FFFFFF; display: flex"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" aria-label="Zoom" role="img"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5M11 8v6M8 11h6"></path></svg></span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="5">
+<button type="button" onClick="{{ t.pick }}" aria-label="{{ t.label }}" aria-pressed="{{ t.on }}" style="height: 92px; border-radius: 10px; border: 2px solid {{ t.border }}; background: {{ t.bg }}; color: {{ t.fg }}; display: flex; align-items: center; justify-content: center; padding: 0"><svg class="ic" width="38" height="38" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.3"><path d="{{ t.path }}"></path></svg></button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<a href="#" style="font-size: 14px; font-weight: 600">Visit the VoltHub store</a>
+<h1 class="h" style="margin: 0; font-size: 28px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em">VoltCell {{ capName }} power bank, 22.5W PD fast charge, 3 outputs, LED display</h1>
+<div style="display: flex; align-items: center; gap: 14px; font-size: 14px; color: #475569">
+<span style="display: flex; align-items: center; gap: 6px"><strong style="color: #0F172A">4.6</strong><svg width="92" height="17" viewBox="0 0 100 18" aria-label="4.6 out of 5 stars" role="img" style="fill: #D97706"><path d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(20 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(40 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(60 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z"></path><path transform="translate(80 0)" d="M9 1l2.4 5 5.4.7-4 3.8 1 5.3L9 13.3l-4.8 2.5 1-5.3-4-3.8 5.4-.7z" style="opacity: .45"></path></svg></span>
+<a href="#reviews">812 ratings</a><span aria-hidden="true">·</span><span>3.4k sold</span><span aria-hidden="true">·</span><span style="color: #15803D; font-weight: 600">Verified seller</span>
+</div>
+</div>
+<div style="height: 1px; background: #E3E6EB"></div>
+
+<sc-if value="{{ retail }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="padding: 3px 8px; border-radius: 6px; background: #FFF1EA; color: #9A3412; font-size: 14px; font-weight: 700">−17%</span><span class="num h" style="font-size: 34px; font-weight: 800">{{ unitTxt }}</span><span class="num" style="font-size: 15px; color: #475569">Was <span style="text-decoration: line-through">{{ wasTxt }}</span></span></div>
+<span class="num" style="font-size: 14px; color: #9A3412; font-weight: 600">Flash deal ends in {{ countdown }}</span>
+<button type="button" onClick="{{ setBusiness }}" style="align-self: flex-start; border: none; background: none; padding: 0; color: #4338CA; font-size: 14px; font-weight: 600; text-decoration: underline">Buying 10 or more? See business pricing</button>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px"><strong>Colour:</strong> {{ colorName }}</span>
+<div role="radiogroup" aria-label="Colour" style="display: flex; gap: 10px">
+<sc-for list="{{ colors }}" as="c" hint-placeholder-count="3">
+<button type="button" role="radio" aria-checked="{{ c.on }}" aria-label="{{ c.name }}" onClick="{{ c.pick }}" style="width: 44px; height: 44px; border-radius: 22px; padding: 3px; border: 2px solid {{ c.ring }}; background: #FFFFFF"><span style="display: block; width: 34px; height: 34px; border-radius: 17px; background: {{ c.hex }}; border: 1px solid #CBD2DC"></span></button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px"><strong>Capacity:</strong> {{ capName }}</span>
+<div role="radiogroup" aria-label="Capacity" style="display: flex; gap: 10px">
+<sc-for list="{{ caps }}" as="c" hint-placeholder-count="3">
+<button type="button" role="radio" aria-checked="{{ c.on }}" onClick="{{ c.pick }}" style="min-width: 128px; padding: 10px 14px; border-radius: 10px; border: 2px solid {{ c.ring }}; background: {{ c.bg }}; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; color: #0F172A"><span style="font-size: 14px; font-weight: 600">{{ c.name }}</span><span class="num" style="font-size: 13px; color: #475569">{{ c.priceTxt }}</span></button>
+</sc-for>
+</div>
+</div>
+<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 15px; line-height: 1.5; color: #1E293B">
+<li>22.5W USB-C Power Delivery charges most phones to 50% in about 30 minutes</li>
+<li>Three outputs (2× USB-A, 1× USB-C) charge three devices at once</li>
+<li>Digital display shows exact remaining charge</li>
+<li>Airline-safe capacity, with overcharge and short-circuit protection</li>
+</ul>
+
+<div style="border: 1px solid #DADDF7; border-radius: 14px; overflow: hidden">
+<div style="padding: 12px 16px; background: #F5F6FF; display: flex; align-items: center; gap: 8px"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="color: #4338CA"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"></path></svg><strong style="font-size: 14px; color: #1E1B4B">Business pricing</strong><span style="font-size: 13px; color: #3730A3">MOQ 10 · Lead time 7 days · Logo printing from 500 units</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))">
+<sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3">
+<div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; background: {{ t.bg }}; border-top: 3px solid {{ t.bar }}"><span class="num h" style="font-size: 20px; font-weight: 700; color: #4338CA">{{ t.priceTxt }}</span><span style="font-size: 13px; color: #475569">{{ t.range }} units</span><span style="font-size: 12px; font-weight: 600; color: #15803D">{{ t.save }}</span></div>
+</sc-for>
+</div>
+<div style="padding: 12px 16px; display: flex; gap: 10px; border-top: 1px solid #E3E6EB">
+<button type="button" onClick="{{ orderSample }}" style="flex-grow: 1; padding: 10px; border-radius: 10px; border: 1px solid #4338CA; background: #FFFFFF; color: #4338CA; font-size: 14px; font-weight: 600">Order a sample · {{ sampleTxt }}</button>
+<a href="#" style="flex-grow: 1; padding: 10px; border-radius: 10px; background: #4338CA; color: #FFFFFF; font-size: 14px; font-weight: 600; text-align: center; text-decoration: none">Request a quote</a>
+</div>
+</div>
+</div>
+
+<aside style="display: flex; flex-direction: column; gap: 16px">
+<div style="border: 1px solid #E3E6EB; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 16px rgba(15,23,42,.05)">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="num h" style="font-size: 28px; font-weight: 800; color: {{ priceColor }}">{{ unitTxt }}<span style="font-size: 14px; font-weight: 500; color: #475569"> {{ perUnit }}</span></span>
+<span class="num" style="font-size: 14px; color: #475569">{{ tierNote }}</span>
+</div>
+<fieldset style="border: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="font-size: 14px; font-weight: 600; margin-bottom: 8px">Delivery to Accra</legend>
+<sc-for list="{{ deliveries }}" as="d" hint-placeholder-count="2">
+<button type="button" role="radio" aria-checked="{{ d.on }}" onClick="{{ d.pick }}" style="display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: 10px; border: 2px solid {{ d.ring }}; background: {{ d.bg }}; text-align: left; color: #0F172A"><span style="width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; border-radius: 8px; border: 2px solid {{ d.dot }}; box-sizing: border-box; background: {{ d.fill }}"></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">{{ d.title }}</span><span class="num" style="font-size: 13px; color: #475569">{{ d.sub }}</span></span></button>
+</sc-for>
+</fieldset>
+<span style="font-size: 15px; font-weight: 600; color: #15803D">In stock (43 left)</span>
+<div style="display: flex; align-items: center; gap: 12px">
+<span id="qty-l" style="font-size: 14px; font-weight: 600">Quantity</span>
+<div role="group" aria-labelledby="qty-l" style="display: flex; align-items: center; border: 1px solid #CBD2DC; border-radius: 10px; overflow: hidden">
+<button type="button" onClick="{{ dec }}" aria-label="Decrease quantity" style="width: 44px; height: 44px; border: none; background: #F6F7F9; font-size: 20px; color: #0F172A">−</button>
+<span class="num" aria-live="polite" style="min-width: 56px; text-align: center; font-weight: 600; font-size: 16px">{{ qty }}</span>
+<button type="button" onClick="{{ inc }}" aria-label="Increase quantity" style="width: 44px; height: 44px; border: none; background: #F6F7F9; font-size: 20px; color: #0F172A">+</button>
+</div>
+</div>
+<div class="num" style="display: flex; justify-content: space-between; font-size: 15px; padding-top: 4px; border-top: 1px solid #E3E6EB"><span style="color: #475569">Total ({{ qty }} items + delivery)</span><strong>{{ totalTxt }}</strong></div>
+<button type="button" onClick="{{ addToCart }}" style="height: 48px; border: none; border-radius: 12px; background: #0B7A62; color: #FFFFFF; font-size: 16px; font-weight: 700">Add to cart</button>
+<button type="button" style="height: 48px; border: none; border-radius: 12px; background: #0F172A; color: #FFFFFF; font-size: 16px; font-weight: 700">Buy now</button>
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}"><div role="status" style="padding: 10px 12px; border-radius: 10px; background: #E7F5F1; color: #075C49; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{ toast }}</div></sc-if>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #475569">
+<span style="display: flex; gap: 8px; align-items: center"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="color: #0B7A62"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z M9 12l2 2 4-4"></path></svg><span><strong style="color: #0F172A">Protected order.</strong> Payment is released to the seller after you confirm delivery.</span></span>
+<span>Pay with Mobile Money, card or on delivery · 7-day returns</span>
+</div>
+<div style="display: flex; gap: 10px">
+<button type="button" onClick="{{ toggleFav }}" aria-pressed="{{ fav }}" style="flex-grow: 1; height: 40px; border-radius: 10px; border: 1px solid #CBD2DC; background: #FFFFFF; font-size: 14px; font-weight: 600; color: {{ favColor }}; display: flex; align-items: center; justify-content: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill: {{ favFill }}; stroke: currentColor; stroke-width: 2; stroke-linejoin: round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"></path></svg>{{ favLabel }}</button>
+<button type="button" onClick="{{ toggleWatch }}" aria-pressed="{{ watch }}" style="flex-grow: 1; height: 40px; border-radius: 10px; border: 1px solid #CBD2DC; background: {{ watchBg }}; font-size: 14px; font-weight: 600; color: #0F172A; display: flex; align-items: center; justify-content: center; gap: 6px"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9 M10.3 21a1.9 1.9 0 0 0 3.4 0"></path></svg>{{ watchLabel }}</button>
+</div>
+</div>
+<div style="border: 1px solid #E3E6EB; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px"><span class="h" style="width: 44px; height: 44px; border-radius: 12px; background: #E7F5F1; color: #0B7A62; display: flex; align-items: center; justify-content: center; font-weight: 800">VH</span><span style="display: flex; flex-direction: column"><strong style="font-size: 15px">VoltHub</strong><span style="font-size: 13px; color: #475569">Accra, Ghana · 5 years</span></span></div>
+<div style="display: flex; gap: 6px"><span style="padding: 3px 8px; border-radius: 6px; background: #E7F5F1; color: #075C49; font-size: 12px; font-weight: 600">Verified</span><span style="padding: 3px 8px; border-radius: 6px; background: #FEF3C7; color: #92400E; font-size: 12px; font-weight: 600">Star Seller</span></div>
+<div class="num" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 12px; color: #475569"><span><strong style="display: block; font-size: 15px; color: #0F172A">4.8</strong>rating</span><span><strong style="display: block; font-size: 15px; color: #0F172A">98%</strong>response</span><span><strong style="display: block; font-size: 15px; color: #0F172A">96%</strong>on time</span></div>
+<div style="display: flex; gap: 8px"><a href="#" style="flex-grow: 1; padding: 9px; border-radius: 10px; border: 1px solid #CBD2DC; text-align: center; font-size: 14px; font-weight: 600; color: #0F172A; text-decoration: none">Message</a><a href="#" style="flex-grow: 1; padding: 9px; border-radius: 10px; border: 1px solid #CBD2DC; text-align: center; font-size: 14px; font-weight: 600; color: #0F172A; text-decoration: none">Visit store</a></div>
+</div>
+</aside>
+</section>
+
+<section aria-labelledby="fbt-h" style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border: 1px solid #E3E6EB; border-radius: 16px">
+<h2 id="fbt-h" class="h" style="margin: 0; font-size: 20px; font-weight: 700">Frequently bought together</h2>
+<div style="display: flex; align-items: center; gap: 18px">
+<sc-for list="{{ fbt }}" as="f" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 18px"><sc-if value="{{ f.plus }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="font-size: 26px; color: #94A3B8">+</span></sc-if><div style="display: flex; align-items: center; gap: 12px; width: 280px"><span style="width: 88px; height: 88px; flex-shrink: 0; border-radius: 12px; background: {{ f.bg }}; color: {{ f.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.4"><path d="{{ f.path }}"></path></svg></span><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; line-height: 1.35">{{ f.name }}</span><strong class="num" style="font-size: 15px">{{ f.priceTxt }}</strong></span></div></div>
+</sc-for>
+<div style="flex-grow: 1"></div>
+<div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end"><span class="num" style="font-size: 15px">Total for all 3: <strong style="font-size: 20px">{{ fbtTotal }}</strong></span><button type="button" onClick="{{ addAll }}" style="padding: 11px 20px; border: none; border-radius: 10px; background: #0B7A62; color: #FFFFFF; font-size: 15px; font-weight: 600">Add all 3 to cart</button></div>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px">
+<div role="tablist" aria-label="Product information" style="display: flex; gap: 4px; border-bottom: 1px solid #E3E6EB">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+<button type="button" role="tab" aria-selected="{{ t.on }}" onClick="{{ t.pick }}" style="padding: 12px 18px; border: none; background: none; border-bottom: 3px solid {{ t.bar }}; margin-bottom: -1px; font-size: 15px; font-weight: 600; color: {{ t.fg }}">{{ t.name }}</button>
+</sc-for>
+</div>
+<div role="tabpanel" style="height: 300px">
+<sc-if value="{{ tabDesc }}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; font-size: 15px; line-height: 1.65; color: #1E293B">
+<p style="margin: 0">The VoltCell power bank keeps a phone, earbuds and a tablet going through a long day or a power cut. Its 22.5W USB-C Power Delivery port fast-charges modern phones, and the two USB-A ports handle everything else at the same time.</p>
+<p style="margin: 0">The digital display shows the exact remaining charge, so you know when to top up. A slim aluminium shell and rounded edges make it easy to carry, and built-in protection guards against overcharging, overheating and short circuits.</p>
+</div>
+</sc-if>
+<sc-if value="{{ tabSpecs }}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; font-size: 14px">
+<sc-for list="{{ specs }}" as="s" hint-placeholder-count="8"><div style="display: flex; padding: 10px 0; border-bottom: 1px solid #F0F2F5"><span style="width: 180px; color: #475569">{{ s.k }}</span><span style="font-weight: 500">{{ s.v }}</span></div></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ tabShip }}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; font-size: 14px; line-height: 1.55">
+<div style="padding: 18px; border-radius: 12px; background: #F6F7F9"><strong style="display: block; margin-bottom: 6px">Doorstep delivery</strong>Greater Accra 1–2 days (GHS 25). Other regions 2–4 days (GHS 35–60).</div>
+<div style="padding: 18px; border-radius: 12px; background: #F6F7F9"><strong style="display: block; margin-bottom: 6px">Pickup stations</strong>Collect from 10 stations in Accra, Kumasi and Takoradi. Held for 7 days (GHS 10).</div>
+<div style="padding: 18px; border-radius: 12px; background: #F6F7F9"><strong style="display: block; margin-bottom: 6px">Returns</strong>7-day returns for unused items in original packaging. Refunds go back to the original payment method.</div>
+</div>
+</sc-if>
+<sc-if value="{{ tabHistory }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 32px; align-items: flex-start">
+<svg width="820" height="260" viewBox="0 0 820 260" role="img" aria-label="Price over the last 12 months, from {{ histMax }} down to {{ histMin }}">
+<line x1="48" y1="20" x2="800" y2="20" stroke="#EEF0F3"></line><line x1="48" y1="90" x2="800" y2="90" stroke="#EEF0F3"></line><line x1="48" y1="160" x2="800" y2="160" stroke="#EEF0F3"></line><line x1="48" y1="230" x2="800" y2="230" stroke="#CBD2DC"></line>
+<polyline points="{{ histPoints }}" style="fill: none; stroke: #0B7A62; stroke-width: 2.5; stroke-linejoin: round"></polyline>
+<circle cx="{{ histLastX }}" cy="{{ histLastY }}" r="5" fill="#0B7A62"></circle>
+<text x="64" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Oct</text><text x="130" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Nov</text><text x="196" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Dec</text><text x="262" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Jan</text><text x="328" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Feb</text><text x="394" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Mar</text><text x="460" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Apr</text><text x="526" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">May</text><text x="592" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Jun</text><text x="658" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Jul</text><text x="724" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Aug</text><text x="790" y="252" style="font-size: 12px; fill: #475569; text-anchor: middle">Sep</text>
+<text x="40" y="24" style="font-size: 12px; fill: #475569; text-anchor: end">{{ histTop }}</text><text x="40" y="234" style="font-size: 12px; fill: #475569; text-anchor: end">{{ histBottom }}</text>
+</svg>
+<div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px">
+<div><span style="color: #475569">Current price</span><strong class="num" style="display: block; font-size: 22px">{{ histNow }}</strong></div>
+<div><span style="color: #475569">12-month low</span><strong class="num" style="display: block; font-size: 18px; color: #15803D">{{ histMin }}</strong></div>
+<div><span style="color: #475569">12-month high</span><strong class="num" style="display: block; font-size: 18px">{{ histMax }}</strong></div>
+<button type="button" onClick="{{ toggleWatch }}" style="padding: 9px 14px; border-radius: 10px; border: 1px solid #0B7A62; background: #FFFFFF; color: #0B7A62; font-weight: 600; font-size: 14px">{{ watchLabel }}</button>
+</div>
+</div>
+</sc-if>
+</div>
+</section>
+
+<section id="reviews" aria-labelledby="rev-h" style="display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 id="rev-h" class="h" style="margin: 0; font-size: 22px; font-weight: 700">Customer reviews</h2>
+<div style="display: flex; align-items: baseline; gap: 10px"><span class="h" style="font-size: 44px; font-weight: 800">4.6</span><span style="font-size: 14px; color: #475569">out of 5 · 812 ratings</span></div>
+<sc-for list="{{ histo }}" as="h" hint-placeholder-count="5">
+<button type="button" onClick="{{ h.pick }}" aria-pressed="{{ h.on }}" style="display: flex; align-items: center; gap: 10px; border: none; background: none; padding: 0; font-size: 14px; color: #0B7A62"><span style="width: 44px; text-align: left">{{ h.stars }} star</span><span style="flex-grow: 1; height: 12px; border-radius: 6px; background: #F1F3F6; overflow: hidden; border: 1px solid {{ h.ring }}"><span style="display: block; height: 12px; width: {{ h.w }}; background: #D97706"></span></span><span class="num" style="width: 36px; text-align: right; color: #475569">{{ h.pct }}%</span></button>
+</sc-for>
+<a href="#" style="margin-top: 6px; padding: 11px; border-radius: 10px; border: 1px solid #CBD2DC; text-align: center; font-weight: 600; font-size: 14px; color: #0F172A; text-decoration: none">Write a review</a>
+<span style="font-size: 13px; color: #475569">Only customers with a delivered order can review.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="padding: 16px 18px; border-radius: 12px; background: #F6F7F9; display: flex; flex-direction: column; gap: 10px">
+<strong style="font-size: 15px">Customers say</strong>
+<p style="margin: 0; font-size: 14px; line-height: 1.55; color: #1E293B">Buyers like the fast charging and the accurate display, and say it lasts two to three full phone charges. Some mention it is heavier than expected.</p>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="padding: 4px 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E3E6EB; font-size: 13px">Fast charging (214)</span><span style="padding: 4px 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E3E6EB; font-size: 13px">Battery life (188)</span><span style="padding: 4px 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E3E6EB; font-size: 13px">Build quality (96)</span><span style="padding: 4px 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E3E6EB; font-size: 13px">Weight (41)</span></div>
+</div>
+<div style="display: flex; gap: 10px; align-items: center; font-size: 14px"><span style="color: #475569">{{ filterNote }}</span><div style="flex-grow: 1"></div><span style="padding: 8px 12px; border-radius: 10px; border: 1px solid #CBD2DC">Sort: Most helpful</span></div>
+<sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+<article style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 18px; border-bottom: 1px solid #E3E6EB">
+<div style="display: flex; align-items: center; gap: 10px"><span style="width: 34px; height: 34px; border-radius: 17px; background: #F1F3F6; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #334155">{{ r.initials }}</span><strong style="font-size: 14px">{{ r.name }}</strong><span style="font-size: 13px; color: #15803D; font-weight: 600">Verified purchase</span><span style="font-size: 13px; color: #475569">· {{ r.date }} · {{ r.variant }}</span></div>
+<div style="display: flex; align-items: center; gap: 10px"><span class="num" style="padding: 2px 8px; border-radius: 6px; background: #FEF6E4; color: #92400E; font-size: 13px; font-weight: 700">{{ r.rating }} ★</span><strong style="font-size: 15px">{{ r.title }}</strong></div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #1E293B">{{ r.body }}</p>
+<div style="display: flex; gap: 12px; align-items: center; font-size: 13px; color: #475569"><button type="button" onClick="{{ r.vote }}" aria-pressed="{{ r.voted }}" style="padding: 6px 12px; border-radius: 999px; border: 1px solid #CBD2DC; background: {{ r.voteBg }}; font-size: 13px; color: #0F172A">Helpful ({{ r.helpful }})</button><a href="#" style="color: #475569">Report</a></div>
+</article>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="also-h" style="display: flex; flex-direction: column; gap: 16px">
+<h2 id="also-h" class="h" style="margin: 0; font-size: 20px; font-weight: 700">Customers also viewed</h2>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{ also }}" as="a" hint-placeholder-count="6">
+<a href="Product.dc.html" style="border: 1px solid #E3E6EB; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; color: #0F172A; text-decoration: none"><span style="height: 150px; background: {{ a.bg }}; color: {{ a.fg }}; display: flex; align-items: center; justify-content: center"><svg class="ic" width="52" height="52" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 1.3"><path d="{{ a.path }}"></path></svg></span><span style="padding: 10px 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; line-height: 1.35; height: 35px; overflow: hidden">{{ a.name }}</span><span class="num" style="font-size: 13px; color: #475569">★ {{ a.rating }}</span><strong class="num" style="font-size: 16px">{{ a.priceTxt }}</strong></span></a>
+</sc-for>
+</div>
+</section>
+</main>
+
+<footer style="flex-shrink: 0; height: 64px; background: #0F172A; color: #94A3B8; font-size: 13px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px"><span>© 2026 MarketHub · Demo project</span><span>Privacy · Terms · Cookie settings</span></footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2760}}'>
+var RATES = { GHS: 1, USD: 1 / 15.2, NGN: 104 };
+function fmt(ghs, cur) {
+  var v = ghs * RATES[cur];
+  if (cur === 'NGN') return '₦' + Math.round(v).toLocaleString('en-US');
+  if (cur === 'USD') return '$' + v.toFixed(2);
+  return 'GHS ' + v.toFixed(2);
+}
+var P = {
+  battery: 'M4 7h13a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z M22 11v2 M10 9l-2 3h4l-2 3',
+  side: 'M9 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z M10 7h4',
+  ports: 'M3 8h18v8H3z M6 11h3v2H6z M11 11h3v2h-3z M16.5 11.5h2v1h-2z',
+  box: 'M3 7l9-4 9 4v10l-9 4-9-4z M3 7l9 4 9-4 M12 11v10',
+  hand: 'M7 11V5a1.5 1.5 0 0 1 3 0v5 M10 10V4a1.5 1.5 0 0 1 3 0v6 M13 10V5a1.5 1.5 0 0 1 3 0v6 M16 11V8a1.5 1.5 0 0 1 3 0v6a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-3l-3-5a1.5 1.5 0 0 1 2.5-1.5L7 14',
+  cable: 'M7 3v4 M11 3v4 M5 7h8v4a4 4 0 0 1-8 0z M9 15v2a4 4 0 0 0 4 4h6',
+  plug: 'M9 2v6 M15 2v6 M6 8h12v4a6 6 0 0 1-12 0z M12 18v4',
+  pouch: 'M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z M4 8l2-4h12l2 4 M9 12h6',
+  headphones: 'M3 14v-2a9 9 0 0 1 18 0v2 M3 14h3v6H4a1 1 0 0 1-1-1z M21 14h-3v6h2a1 1 0 0 0 1-1z',
+  phone: 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z M11 18h2',
+  watch: 'M8 6h8v12H8z M9 6l1-4h4l1 4 M9 18l1 4h4l1-4 M12 10v2l1 1',
+  sun: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z M12 2v2 M12 20v2 M4.9 4.9l1.4 1.4 M17.7 17.7l1.4 1.4 M2 12h2 M20 12h2 M4.9 19.1l1.4-1.4 M17.7 6.3l1.4-1.4'
+};
+var COLORS = [['Graphite black', '#1F2937', '#F1F3F6', '#334155'], ['Pearl white', '#F8FAFC', '#F6F7F9', '#475569'], ['Deep teal', '#0B7A62', '#E7F5F1', '#0B7A62']];
+var CAPS = [['10,000mAh', 179, 215], ['20,000mAh', 249, 299], ['30,000mAh', 329, 389]];
+var TIERS = [[10, 99, 0.864, '10–99'], [100, 499, 0.795, '100–499'], [500, 1e9, 0.731, '500+']];
+var VIEWS = [['Front', 'battery'], ['Side', 'side'], ['Ports', 'ports'], ['In the box', 'box'], ['In hand', 'hand']];
+var HIST = [289, 299, 299, 279, 285, 299, 269, 275, 259, 265, 229, 249];
+var MONTHS = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+var REVIEWS = [
+  ['KA', 'Kofi A.', '12 Sep 2026', 'Black · 20,000mAh', 5, 'Charges my phone four times', 'Used it through two days of power cuts and it still had charge left. The display is accurate and USB-C fast charging works with my Samsung.', 24],
+  ['NO', 'Ngozi O.', '28 Aug 2026', 'White · 20,000mAh', 4, 'Great, but a little heavy', 'Charging is quick and I like that I can charge my phone and earbuds together. It is heavier than my old one, so it lives in my bag, not my pocket.', 11],
+  ['DM', 'David M.', '3 Aug 2026', 'Teal · 30,000mAh', 5, 'Ordered 50 for my shop', 'Bought at the 10–99 tier for resale. Arrived in six days, well packed, and all units tested fine. The seller answered questions within the hour.', 9]
+];
+var HISTO = [[5, 68], [4, 20], [3, 7], [2, 3], [1, 2]];
+var FBT = [['This item: VoltCell power bank', 'battery', '#E7F5F1', '#0B7A62', null], ['Braided USB-C to USB-C cable, 1m', 'cable', '#EEF0FF', '#4338CA', 39], ['20W USB-C wall charger', 'plug', '#FEF6E4', '#B45309', 69]];
+var ALSO = [['Slim 10,000mAh magnetic power bank', 'battery', '#E8F3FB', '#0369A1', 4.4, 199], ['Solar power bank 25,000mAh, rugged', 'sun', '#FEF6E4', '#B45309', 4.2, 359], ['Wireless earbuds, 30h battery', 'headphones', '#EEF0FF', '#4338CA', 4.5, 279], ['Phone case with kickstand', 'phone', '#F1F3F6', '#334155', 4.3, 59], ['Fitness band, sleep tracking', 'watch', '#FDEEF1', '#BE185D', 4.1, 229], ['Zip tech organiser pouch', 'pouch', '#F1F5E6', '#4D7C0F', 4.7, 85]];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cur: 'GHS', biz: false, color: 0, cap: 1, view: 0, qty: 1, del: 0, tab: 0, fav: false, watch: false, cart: 3, toast: '', secs: 4 * 3600 + 12 * 60 + 33, votes: {}, stars: 0 };
+  }
+  componentDidMount() { this.timer = setInterval(() => this.setState({ secs: Math.max(0, this.state.secs - 1) }), 1000); }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    var s = this.state, self = this, cur = s.cur;
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var cap = CAPS[s.cap], base = cap[1];
+    var tierIdx = -1;
+    TIERS.forEach(function (t, i) { if (s.qty >= t[0] && s.qty <= t[1]) tierIdx = i; });
+    var unit = s.biz && tierIdx >= 0 ? Math.round(base * TIERS[tierIdx][2] * 100) / 100 : base;
+    var delFee = s.del === 0 ? 25 : 10;
+    var hMin = Math.min.apply(null, HIST), hMax = Math.max.apply(null, HIST);
+    var yOf = function (v) { return Math.round(230 - (v - 220) / (310 - 220) * 210); };
+    var xOf = function (i) { return 64 + i * 66; };
+    var tabNames = ['Description', 'Specifications', 'Shipping & returns', 'Price history'];
+    var nextSet = function (patch, msg) { self.setState(Object.assign({}, patch, msg ? { toast: msg } : {})); if (msg) { clearTimeout(self.tt); self.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2500); } };
+    var shownReviews = REVIEWS.filter(function (r) { return !s.stars || r[4] === s.stars; });
+    return {
+      countdown: pad(Math.floor(s.secs / 3600)) + ':' + pad(Math.floor(s.secs % 3600 / 60)) + ':' + pad(s.secs % 60),
+      cartCount: s.cart,
+      currencies: ['GHS', 'USD', 'NGN'].map(function (c) { return { code: c, on: c === cur, bg: c === cur ? '#0F172A' : 'transparent', fg: c === cur ? '#FFFFFF' : '#475569', pick: function () { self.setState({ cur: c }); } }; }),
+      retailBg: s.biz ? 'transparent' : '#0B7A62', retailFg: s.biz ? '#475569' : '#FFFFFF', bizBg: s.biz ? '#4338CA' : 'transparent', bizFg: s.biz ? '#FFFFFF' : '#475569',
+      setRetail: function () { self.setState({ biz: false, qty: 1 }); },
+      setBusiness: function () { self.setState({ biz: true, qty: Math.max(10, s.qty) }); },
+      retail: !s.biz,
+      view: { bg: COLORS[s.color][2], fg: COLORS[s.color][3], label: VIEWS[s.view][0] },
+      thumbs: VIEWS.map(function (v, i) { return { label: 'Show ' + v[0] + ' view', on: i === s.view, path: P[v[1]], bg: COLORS[s.color][2], fg: COLORS[s.color][3], border: i === s.view ? '#0B7A62' : '#E3E6EB', pick: function () { self.setState({ view: i }); } }; }),
+      colorName: COLORS[s.color][0],
+      colors: COLORS.map(function (c, i) { return { name: c[0], hex: c[1], on: i === s.color, ring: i === s.color ? '#0B7A62' : 'transparent', pick: function () { self.setState({ color: i }); } }; }),
+      capName: cap[0],
+      caps: CAPS.map(function (c, i) { return { name: c[0], priceTxt: fmt(c[1], cur), on: i === s.cap, ring: i === s.cap ? '#0B7A62' : '#E3E6EB', bg: i === s.cap ? '#F3FBF8' : '#FFFFFF', pick: function () { self.setState({ cap: i }); } }; }),
+      unitTxt: fmt(unit, cur), wasTxt: fmt(cap[2], cur),
+      perUnit: s.biz ? '/unit' : '',
+      priceColor: s.biz ? '#4338CA' : '#0F172A',
+      tierNote: s.biz ? ('Tier ' + TIERS[tierIdx][3] + ' units · you save ' + Math.round((1 - TIERS[tierIdx][2]) * 100) + '% vs retail') : 'Flash deal price · ends in ' + pad(Math.floor(s.secs / 3600)) + 'h ' + pad(Math.floor(s.secs % 3600 / 60)) + 'm',
+      tiers: TIERS.map(function (t, i) { var on = s.biz && i === tierIdx; return { priceTxt: fmt(Math.round(base * t[2] * 100) / 100, cur), range: t[3], save: 'Save ' + Math.round((1 - t[2]) * 100) + '%', bg: on ? '#EEF0FF' : '#FFFFFF', bar: on ? '#4338CA' : 'transparent' }; }),
+      sampleTxt: fmt(base + 11, cur),
+      orderSample: function () { nextSet({ cart: s.cart + 1 }, 'Sample added to cart (max 2 per buyer)'); },
+      deliveries: [['Doorstep delivery', 'Arrives Tue 30 Sep · ' + fmt(25, cur)], ['Pickup station · Accra Mall', 'Ready Mon 29 Sep · ' + fmt(10, cur)]].map(function (d, i) {
+        var on = i === s.del; return { title: d[0], sub: d[1], on: on, ring: on ? '#0B7A62' : '#E3E6EB', bg: on ? '#F3FBF8' : '#FFFFFF', dot: on ? '#0B7A62' : '#94A3B8', fill: on ? 'radial-gradient(circle, #0B7A62 40%, #FFFFFF 45%)' : '#FFFFFF', pick: function () { self.setState({ del: i }); } };
+      }),
+      qty: s.qty,
+      dec: function () { self.setState({ qty: Math.max(s.biz ? 10 : 1, s.qty - (s.biz ? 10 : 1)) }); },
+      inc: function () { self.setState({ qty: s.qty + (s.biz ? (s.qty >= 100 ? 100 : 10) : 1) }); },
+      totalTxt: fmt(unit * s.qty + delFee, cur),
+      addToCart: function () { nextSet({ cart: s.cart + s.qty }, 'Added ' + s.qty + ' × ' + cap[0] + ' to your cart'); },
+      toast: s.toast,
+      fav: s.fav, favColor: s.fav ? '#C2410C' : '#0F172A', favFill: s.fav ? '#C2410C' : 'none', favLabel: s.fav ? 'Saved' : 'Wishlist',
+      toggleFav: function () { self.setState({ fav: !s.fav }); },
+      watch: s.watch, watchBg: s.watch ? '#E7F5F1' : '#FFFFFF', watchLabel: s.watch ? 'Watching price' : 'Watch price',
+      toggleWatch: function () { nextSet({ watch: !s.watch }, s.watch ? 'Price alert removed' : 'We’ll tell you when the price drops'); },
+      fbt: FBT.map(function (f, i) { return { plus: i > 0, name: f[0], path: P[f[1]], bg: f[2], fg: f[3], priceTxt: fmt(f[4] === null ? base : f[4], cur) }; }),
+      fbtTotal: fmt(base + 39 + 69, cur),
+      addAll: function () { nextSet({ cart: s.cart + 3 }, 'Added 3 items to your cart'); },
+      tabs: tabNames.map(function (n, i) { return { name: n, on: i === s.tab, bar: i === s.tab ? '#0B7A62' : 'transparent', fg: i === s.tab ? '#0F172A' : '#475569', pick: function () { self.setState({ tab: i }); } }; }),
+      tabDesc: s.tab === 0, tabSpecs: s.tab === 1, tabShip: s.tab === 2, tabHistory: s.tab === 3,
+      specs: [['Brand', 'VoltCell (fictional)'], ['Capacity', cap[0]], ['Max output', '22.5W (USB-C PD)'], ['Ports', '2× USB-A, 1× USB-C in/out'], ['Recharge time', '≈ 5.5 h with 18W charger'], ['Weight', s.cap === 0 ? '215 g' : s.cap === 1 ? '360 g' : '520 g'], ['Colour', COLORS[s.color][0]], ['Warranty', '12 months, seller warranty']].map(function (x) { return { k: x[0], v: x[1] }; }),
+      histPoints: HIST.map(function (v, i) { return xOf(i) + ',' + yOf(v); }).join(' '),
+      histLastX: xOf(11), histLastY: yOf(HIST[11]),
+      histLabels: MONTHS.map(function (m, i) { return { m: m, x: xOf(i) }; }),
+      histTop: fmt(310, cur).replace('.00', ''), histBottom: fmt(220, cur).replace('.00', ''),
+      histNow: fmt(HIST[11], cur), histMin: fmt(hMin, cur), histMax: fmt(hMax, cur),
+      histo: HISTO.map(function (h) { var on = s.stars === h[0]; return { stars: h[0], pct: h[1], w: h[1] + '%', on: on, ring: on ? '#D97706' : 'transparent', pick: function () { self.setState({ stars: on ? 0 : h[0] }); } }; }),
+      filterNote: s.stars ? ('Showing ' + s.stars + '-star reviews · click the bar again to clear') : 'Showing all reviews · click a bar to filter',
+      reviews: shownReviews.map(function (r) {
+        var id = r[1], voted = !!s.votes[id];
+        return { initials: r[0], name: r[1], date: r[2], variant: r[3], rating: r[4], title: r[5], body: r[6], helpful: r[7] + (voted ? 1 : 0), voted: voted, voteBg: voted ? '#E7F5F1' : '#FFFFFF', vote: function () { var v = Object.assign({}, s.votes); v[id] = !voted; self.setState({ votes: v }); } };
+      }),
+      also: ALSO.map(function (a) { return { name: a[0], path: P[a[1]], bg: a[2], fg: a[3], rating: a[4], priceTxt: fmt(a[5], cur) }; })
+    };
+  }
+}
+</script>
+</body>
+</html>
