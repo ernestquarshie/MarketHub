@@ -17,3 +17,4 @@
 | 2026-09-26 | 4 — Build plan | **Approved** by Ern. |
 | 2026-09-26 | 4 — M1 Foundation | Built on branch `m1-foundation`: scaffold, schema (44 tables), seed, Better Auth + roles, layout, tests + CI. 29 unit + 21 E2E/a11y tests passing. Pending demo approval. |
 | 2026-09-26 | 4 — M1 Foundation | **Approved** by Ern ("Go on"). Merged to `main`. M2 Catalogue started on `m2-catalogue`. |
+| 2026-09-26 | 4 — M2 Catalogue | Built on `m2-catalogue`: catalogue expanded to 50 products/15 sellers (20 new AI sample photos), Postgres search + autocomplete, search/category pages with facets, product page (variants, retail + bulk buy boxes, delivery estimate, reviews, price history, recommendations), home rails, deals, sellers, storefronts, wishlist + price alerts, add-to-cart (pulled forward from M3), SEO (JSON-LD, sitemap, robots). 38 unit + 39 E2E/a11y tests passing; Lighthouse (warm) home 97/100/100/92→fixed, product 99 perf. Pending demo approval. |

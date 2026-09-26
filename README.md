@@ -5,9 +5,11 @@ A multi-vendor **B2C + B2B marketplace**. It combines Amazon-grade retail shoppi
 > Portfolio / demo build. All payments run in **test mode**. All sellers, brands and people in the demo data are fictional.
 
 ## Stack
+
 Next.js 16 (App Router, React 19) · TypeScript (strict) · Tailwind CSS v4 + Radix UI · PostgreSQL + Drizzle ORM · Better Auth · Vitest · Playwright + axe · GitHub Actions. Full rationale is in [docs/03-design.md](docs/03-design.md).
 
 ## Quick start
+
 Requirements: Node 22+, pnpm 10+, and Docker (or any PostgreSQL 16 server).
 
 ```bash
@@ -19,29 +21,32 @@ pnpm dev                        # http://localhost:3000
 ```
 
 ### Demo accounts
+
 Use **Try as…** in the top bar, or sign in with any of these (password `Demo1234!`):
 
-| Role | Email |
-|---|---|
-| Shopper (Accra) | `shopper@demo.markethub.test` |
+| Role                   | Email                          |
+| ---------------------- | ------------------------------ |
+| Shopper (Accra)        | `shopper@demo.markethub.test`  |
 | Business buyer (Lagos) | `business@demo.markethub.test` |
-| Seller (VoltHub) | `seller@demo.markethub.test` |
-| Admin | `admin@demo.markethub.test` |
+| Seller (VoltHub)       | `seller@demo.markethub.test`   |
+| Admin                  | `admin@demo.markethub.test`    |
 
 ## Scripts
-| Command | What it does |
-|---|---|
-| `pnpm dev` / `pnpm build` / `pnpm start` | Run, build and serve the app |
-| `pnpm lint` · `pnpm typecheck` · `pnpm format` | Code quality |
-| `pnpm test` | Unit tests (Vitest): money, pricing rules, authorization policy |
-| `pnpm test:e2e` | Playwright E2E + accessibility tests (builds must exist; starts `pnpm start` on :3100) |
-| `pnpm db:generate` / `pnpm db:migrate` | Create / apply Drizzle migrations |
-| `pnpm db:seed` | **Reset** the database and load demo data |
-| `pnpm db:studio` | Browse the database |
+
+| Command                                        | What it does                                                                           |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `pnpm dev` / `pnpm build` / `pnpm start`       | Run, build and serve the app                                                           |
+| `pnpm lint` · `pnpm typecheck` · `pnpm format` | Code quality                                                                           |
+| `pnpm test`                                    | Unit tests (Vitest): money, pricing rules, authorization policy                        |
+| `pnpm test:e2e`                                | Playwright E2E + accessibility tests (builds must exist; starts `pnpm start` on :3100) |
+| `pnpm db:generate` / `pnpm db:migrate`         | Create / apply Drizzle migrations                                                      |
+| `pnpm db:seed`                                 | **Reset** the database and load demo data                                              |
+| `pnpm db:studio`                               | Browse the database                                                                    |
 
 To use a system Chromium for E2E, set `PLAYWRIGHT_CHROMIUM_PATH`.
 
 ## Project layout
+
 ```
 src/
   app/(store)/        storefront + account (header/footer layout)
@@ -58,18 +63,20 @@ docs/                 stage docs (brief → deploy), prototype, changelog
 ```
 
 ## Security notes
+
 - Authorization lives in `src/server/auth/policy.ts` and is checked in every protected layout, page and server action. `proxy.ts` only redirects signed-out users early.
 - Inputs are validated with Zod. Money is stored as integer minor units.
 - Secrets live in `.env` (git-ignored). Only `.env.example` is committed.
 
 ## Project docs
-| Stage | Doc |
-|---|---|
-| 0 Discovery | [docs/00-brief.md](docs/00-brief.md) |
-| 1 References | [docs/01-references.md](docs/01-references.md) |
-| 2 Requirements | [docs/02-requirements.md](docs/02-requirements.md) |
-| 3 Design | [docs/03-design.md](docs/03-design.md) · prototype in `docs/prototype/` |
-| 4 Build plan | [docs/04-build-plan.md](docs/04-build-plan.md) |
-| Decisions | [docs/CHANGELOG.md](docs/CHANGELOG.md) |
+
+| Stage          | Doc                                                                     |
+| -------------- | ----------------------------------------------------------------------- |
+| 0 Discovery    | [docs/00-brief.md](docs/00-brief.md)                                    |
+| 1 References   | [docs/01-references.md](docs/01-references.md)                          |
+| 2 Requirements | [docs/02-requirements.md](docs/02-requirements.md)                      |
+| 3 Design       | [docs/03-design.md](docs/03-design.md) · prototype in `docs/prototype/` |
+| 4 Build plan   | [docs/04-build-plan.md](docs/04-build-plan.md)                          |
+| Decisions      | [docs/CHANGELOG.md](docs/CHANGELOG.md)                                  |
 
 Product photos in `public/images/products` are AI-generated sample images made for this demo.

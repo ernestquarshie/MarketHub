@@ -2,7 +2,19 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { signInAs } from "./helpers";
 
-const PUBLIC_PAGES = ["/", "/login", "/register", "/forgot-password", "/seller/apply", "/search"];
+const PUBLIC_PAGES = [
+  "/",
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/seller/apply",
+  "/search?q=power",
+  "/c/electronics",
+  "/p/voltcell-20000mah-power-bank-22-5w",
+  "/deals",
+  "/sellers",
+  "/store/volthub",
+];
 
 for (const path of PUBLIC_PAGES) {
   test(`no serious a11y violations on ${path}`, async ({ page }) => {

@@ -48,7 +48,6 @@ export async function SiteHeader() {
         </div>
         <div className="ml-auto flex items-center gap-2 lg:ml-0 lg:gap-4">
           <CurrencySwitcher current={prefs.currency} className="hidden sm:flex" />
-          <PricingViewToggle current={prefs.view} className="hidden xl:flex" />
           <div className="hidden md:block">
             <AccountMenu
               user={
@@ -98,7 +97,8 @@ export async function SiteHeader() {
               {n.label}
             </Link>
           ))}
-          <span className="ml-auto flex items-center gap-1.5 text-muted">
+          <PricingViewToggle current={prefs.view} className="ml-auto" />
+          <span className="flex items-center gap-1.5 text-muted">
             <MapPin className="size-4" aria-hidden />
             Deliver to{" "}
             <strong className="text-text">
@@ -109,7 +109,7 @@ export async function SiteHeader() {
       </nav>
 
       {/* Compact prefs row (mobile/tablet) */}
-      <div className="border-t border-surface-2 xl:hidden">
+      <div className="border-t border-surface-2 lg:hidden">
         <div className="container-page flex items-center justify-between gap-3 py-2">
           <CurrencySwitcher current={prefs.currency} className="sm:hidden" />
           <PricingViewToggle current={prefs.view} className="ml-auto" />

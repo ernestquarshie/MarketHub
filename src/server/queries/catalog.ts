@@ -120,16 +120,27 @@ export const getActiveDeals = cache(async (limit = 12) => {
 });
 
 /** Ready-to-ship products with bulk tiers, for the Alibaba-style bulk rail. */
-export const getBulkProducts = cache(async (limit = 8): Promise<(ProductCardData & { tiers: { minQty: number; maxQty: number | null; unitPrice: number }[] })[]> => {
-  const rows = await db.query.product.findMany({
-    where: and(eq(schema.product.status, "published"), eq(schema.product.readyToShip, true), gt(schema.product.moq, 1)),
-    orderBy: desc(schema.product.soldCount),
-    limit,
-    columns: cardColumns,
-    with: { ...cardWith(new Date()), tiers: { columns: { minQty: true, maxQty: true, unitPrice: true }, orderBy: asc(schema.priceTier.minQty) } },
-  });
-  return rows.filter((r) => r.tiers.length).map((r) => ({ ...toCard(r), tiers: r.tiers }));
-});
+export const getBulkProducts = cache(
+  async (
+    limit = 8,
+  ): Promise<(ProductCardData & { tiers: { minQty: number; maxQty: number | null; unitPrice: number }[] })[]> => {
+    const rows = await db.query.product.findMany({
+      where: and(
+        eq(schema.product.status, "published"),
+        eq(schema.product.readyToShip, true),
+        gt(schema.product.moq, 1),
+      ),
+      orderBy: desc(schema.product.soldCount),
+      limit,
+      columns: cardColumns,
+      with: {
+        ...cardWith(new Date()),
+        tiers: { columns: { minQty: true, maxQty: true, unitPrice: true }, orderBy: asc(schema.priceTier.minQty) },
+      },
+    });
+    return rows.filter((r) => r.tiers.length).map((r) => ({ ...toCard(r), tiers: r.tiers }));
+  },
+);
 
 export interface SellerCardData {
   id: string;
@@ -162,7 +173,7 @@ export const getTopSellers = cache(async (limit = 8): Promise<SellerCardData[]> 
       responseRate: schema.seller.responseRate,
       joinedAt: schema.seller.joinedAt,
       logoUrl: schema.seller.logoUrl,
-      productCount: sql<number>`(select count(*)::int from product p where p.seller_id = ${schema.seller.id} and p.status = 'published')`,
+      productCount: sql<number>`(select count(*)::int from product p where p.seller_id = "seller"."id" and p.status = 'published')`,
     })
     .from(schema.seller)
     .where(eq(schema.seller.status, "approved"))

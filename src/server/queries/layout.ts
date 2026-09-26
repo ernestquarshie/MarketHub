@@ -48,3 +48,14 @@ export const getUnreadNotificationCount = cache(async (): Promise<number> => {
     .where(sql`${schema.notification.userId} = ${actor.id} and ${schema.notification.readAt} is null`);
   return row?.n ?? 0;
 });
+
+/** Product ids in the signed-in user's wishlist (cached per request). */
+export const getWishlistIds = cache(async (): Promise<Set<string>> => {
+  const actor = await getActor();
+  if (!actor) return new Set();
+  const rows = await db
+    .select({ id: schema.wishlistItem.productId })
+    .from(schema.wishlistItem)
+    .where(eq(schema.wishlistItem.userId, actor.id));
+  return new Set(rows.map((r) => r.id));
+});

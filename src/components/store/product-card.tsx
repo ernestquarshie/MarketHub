@@ -7,8 +7,10 @@ import { percentOff } from "@/lib/money";
 import { compactNumber } from "@/lib/utils";
 import { Price } from "./price";
 import { RatingStars } from "./rating-stars";
+import { WishlistHeart } from "@/components/product/wishlist-heart";
+import { getWishlistIds } from "@/server/queries/layout";
 
-export function ProductCard({
+export async function ProductCard({
   product: p,
   currency,
   rates,
@@ -30,6 +32,7 @@ export function ProductCard({
     : p.compareAtPrice;
   const off = was ? percentOff(was, retailNow) : 0;
   const showBusiness = view === "business" && p.lowestTierPrice != null;
+  const saved = (await getWishlistIds()).has(p.id);
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-[14px] border border-border bg-bg transition-shadow hover:border-border-strong hover:shadow-[var(--shadow-card)]">
@@ -50,6 +53,7 @@ export function ProductCard({
           </span>
         ) : null}
       </Link>
+      <WishlistHeart productId={p.id} title={p.title} initial={saved} />
       <div className="flex flex-1 flex-col gap-1.5 p-3 sm:px-3.5 sm:pb-3.5">
         <h3 className="font-sans text-sm leading-snug font-normal">
           <Link

@@ -33,7 +33,8 @@ const positiveNumber = z.coerce.number().finite().positive().max(1e9).optional()
 const flag = z
   .string()
   .optional()
-  .transform((v) => v === "1" || v === "true");
+  .transform((v) => v === "1" || v === "true")
+  .catch(false);
 
 const schema = z.object({
   q: z
@@ -41,7 +42,8 @@ const schema = z.object({
     .trim()
     .max(120)
     .optional()
-    .transform((v) => v || undefined),
+    .transform((v) => v || undefined)
+    .catch(undefined),
   c: z
     .string()
     .regex(/^[a-z0-9-]{1,80}$/)
@@ -110,7 +112,11 @@ export function parseSearchParams(raw: RawParams, forcedCategory?: string): Sear
 }
 
 /** Serialise back to a query string, omitting defaults. `patch` overrides fields; page resets unless given. */
-export function toQueryString(params: SearchParams, patch: Partial<SearchParams> = {}, opts: { keepCategory?: boolean } = {}) {
+export function toQueryString(
+  params: SearchParams,
+  patch: Partial<SearchParams> = {},
+  opts: { keepCategory?: boolean } = {},
+) {
   const next = { ...params, page: 1, ...patch };
   const qs = new URLSearchParams();
   if (next.q) qs.set("q", next.q);

@@ -84,21 +84,42 @@ function andAll(parts: SQL[]): SQL {
   return parts.length ? sql.join(parts, sql` and `) : sql`true`;
 }
 
-export async function searchProducts(params: SearchParams, displayCurrency: Currency, rates: Rates): Promise<SearchResult> {
+export async function searchProducts(
+  params: SearchParams,
+  displayCurrency: Currency,
+  rates: Rates,
+  opts: { sellerId?: string } = {},
+): Promise<SearchResult> {
   const core: SQL[] = [sql`p.status = 'published'`];
+  if (opts.sellerId) core.push(sql`p.seller_id = ${opts.sellerId}::uuid`);
   if (params.q) core.push(textMatch(params.q));
   if (params.category) {
     const ids = await categoryIds(params.category);
     if (!ids) return emptyResult(params.page);
-    core.push(sql`p.category_id in (${sql.join(ids.map((id) => sql`${id}::uuid`), sql`, `)})`);
+    core.push(
+      sql`p.category_id in (${sql.join(
+        ids.map((id) => sql`${id}::uuid`),
+        sql`, `,
+      )})`,
+    );
   }
 
   // Facet filters (each facet's counts ignore its own filter, so options don't vanish when picked).
   const f: Record<string, SQL | null> = {
     price: null,
     rating: params.minRating ? sql`p.rating_avg >= ${params.minRating}` : null,
-    brand: params.brands.length ? sql`p.brand in (${sql.join(params.brands.map((b) => sql`${b}`), sql`, `)})` : null,
-    country: params.countries.length ? sql`s.country in (${sql.join(params.countries.map((c) => sql`${c}`), sql`, `)})` : null,
+    brand: params.brands.length
+      ? sql`p.brand in (${sql.join(
+          params.brands.map((b) => sql`${b}`),
+          sql`, `,
+        )})`
+      : null,
+    country: params.countries.length
+      ? sql`s.country in (${sql.join(
+          params.countries.map((c) => sql`${c}`),
+          sql`, `,
+        )})`
+      : null,
     readyToShip: params.readyToShip ? sql`p.ready_to_ship` : null,
     verified: params.verifiedOnly ? sql`s.is_verified` : null,
     inStock: params.inStock ? sql`st.stock > 0` : null,
@@ -110,7 +131,13 @@ export async function searchProducts(params: SearchParams, displayCurrency: Curr
   if (params.maxPrice !== undefined) priceParts.push(sql`${priceUsd} <= ${toMinor(params.maxPrice) / perUsd}`);
   if (priceParts.length) f.price = andAll(priceParts);
 
-  const except = (key: string) => andAll([...core, ...Object.entries(f).filter(([k, v]) => k !== key && v).map(([, v]) => v!)]);
+  const except = (key: string) =>
+    andAll([
+      ...core,
+      ...Object.entries(f)
+        .filter(([k, v]) => k !== key && v)
+        .map(([, v]) => v!),
+    ]);
   const where = except("__none__");
 
   const q = params.q ?? "";
@@ -127,7 +154,9 @@ export async function searchProducts(params: SearchParams, displayCurrency: Curr
 
   const offset = (params.page - 1) * PAGE_SIZE;
   const [idRows, totalRows, catRows, brandRows, countryRows, ratingRows, flagRows, priceRows] = await Promise.all([
-    db.execute<{ id: string }>(sql`select p.id ${baseFrom()} where ${where} order by ${order[params.sort]}, p.id limit ${PAGE_SIZE} offset ${offset}`),
+    db.execute<{ id: string }>(
+      sql`select p.id ${baseFrom()} where ${where} order by ${order[params.sort]}, p.id limit ${PAGE_SIZE} offset ${offset}`,
+    ),
     db.execute<{ n: number }>(sql`select count(*)::int as n ${baseFrom()} where ${where}`),
     db.execute<{ value: string; label: string; count: number }>(sql`
       select c.slug as value, c.name as label, count(*)::int as count ${baseFrom()}
@@ -188,20 +217,39 @@ function emptyResult(page: number): SearchResult {
     total: 0,
     page,
     pageCount: 1,
-    facets: { categories: [], brands: [], countries: [], ratings: [], readyToShip: 0, verified: 0, inStock: 0, priceRangeUsdMinor: null },
+    facets: {
+      categories: [],
+      brands: [],
+      countries: [],
+      ratings: [],
+      readyToShip: 0,
+      verified: 0,
+      inStock: 0,
+      priceRangeUsdMinor: null,
+    },
     didYouMean: null,
   };
 }
 
 /** Supplier search ("Suppliers" tab): sellers whose name/story match, or who sell matching products. */
-export async function searchSuppliers(q: string | undefined, category?: string): Promise<(SellerCardData & { matchingProducts: number })[]> {
+export async function searchSuppliers(
+  q: string | undefined,
+  category?: string,
+): Promise<(SellerCardData & { matchingProducts: number })[]> {
   const catIds = category ? await categoryIds(category) : null;
   const productFilter = andAll([
     sql`p.status = 'published'`,
     ...(q ? [textMatch(q)] : []),
-    ...(catIds ? [sql`p.category_id in (${sql.join(catIds.map((id) => sql`${id}::uuid`), sql`, `)})`] : []),
+    ...(catIds
+      ? [
+          sql`p.category_id in (${sql.join(
+            catIds.map((id) => sql`${id}::uuid`),
+            sql`, `,
+          )})`,
+        ]
+      : []),
   ]);
-  const rows = await db.execute<SellerCardData & { matchingProducts: number }>(sql`
+  const rows = await db.execute<Record<string, unknown> & SellerCardData & { matchingProducts: number }>(sql`
     select s.id, s.slug, s.name, s.country, s.city, s.is_verified as "isVerified", s.is_star_seller as "isStarSeller",
       s.rating_avg as "ratingAvg", s.rating_count as "ratingCount", s.response_rate as "responseRate",
       s.joined_at as "joinedAt", s.logo_url as "logoUrl",
